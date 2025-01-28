@@ -1,0 +1,4 @@
+<?php
+echo 'Permissão negada';
+
+?>

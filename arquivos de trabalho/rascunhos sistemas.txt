@@ -1,0 +1,22 @@
+
+Observação
+fonte recurso
+nr_sic
+cod_contrato
+aditivo prazo
+analise comissão
+Providencias
+valor pago
+data atualização
+data_ordem_servico
+url_hiperlink
+
+=======================================
+observacao character varying(4000) COLLATE pg_catalog."default",
+
+
+
+
+
+
+
