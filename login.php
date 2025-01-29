@@ -94,6 +94,7 @@ if(isset($_COOKIE['lembrar'])){
                         $_SESSION['login'] = $info['login'];
                         $_SESSION['nome'] = $info['nome'];
                         $_SESSION['codPerfil'] = $info['cod_perfil'];
+                        $_SESSION['imagem'] = $info['imagem'];
                         if(isset($_POST['lembrar'])){
                           setcookie('lembrar','true',time()+(60*60*24),'/');
                           setcookie('cpf',$cpf,time()+(60*60*24),'/');

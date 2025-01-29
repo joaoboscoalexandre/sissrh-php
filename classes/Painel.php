@@ -71,6 +71,33 @@
 			}
 		}
 
+
+		public static function imagemValida($imagem){
+			if($imagem['type'] == 'imagem/jpeg' || $imagem['type'] == 'imagem/jpg' || $imagem['type'] == 'imagem/png'){
+				$tamanho = intval($imagem['size']/1024);
+				if($tamanho < 300) return true;
+				else return false;
+			}else {
+				return false;
+			}
+		}
+
+
+		public static function uploadFile($file){
+			$formatoArquivo = explode('.',$file['name']);
+			$imagemNome = uniqid().'.'.$formatoArquivo[count($formatoArquivo) - 1];
+			if(move_uploaded_file($file['tmp_name'],INCLUDE_PATH.'uploads/'.$imagemNome))
+			return $imagemNome;
+			else
+			return false;
+		}
+
+
+		public static function deleteFile($file){
+			@unlink('uploads/'.$file);
+		}
+
+
 		public static function carregarPagina(){
 			if(isset($_GET['url'])){
 				$url = explode('/',$_GET['url']);

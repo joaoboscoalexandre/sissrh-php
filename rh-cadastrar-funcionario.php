@@ -436,9 +436,15 @@ include('permissoes.php');
                   $grupoOcupacional = $_POST['codGrupoOcupacional'];
                   $status = $_POST['status'];
                   $dataModificado = date('Y-m-d');
+                  $imagem = $_FILES['imagem'];
+                  $imagem_atual = $_POST['imagem_atual'];
 
-                  $sql = PgSql::conectar()->prepare("UPDATE sissrh.tbrh_funcionario SET matricula=?,nome=?,login=?,email=?,cpf=?,sexo=?,endereco=?,bairro=?,cep=?,telefone=?,celular=?,data_nascimento=?,nome_pai=?,estado_civil=?,senha=?,cod_tipo_funcionario=?,cod_grupo_ocupacional=?,inativo=?,nome_mae=?,cidade=?,modificado=? WHERE cod_funcionario=? ");
-                  $sql->execute(array($matricula,$nome,$login,$email,$cpf,$sexo,$endereco,$bairro,$cep,$ramal,$celular,$dataNascimento,$nomePai,$estadoCivil,$senha,$tipoFuncionario,$grupoOcupacional,$status,$nomeMae,$cidade,$dataModificado,$codFuncionario ));
+                  if($imagem['name'] != ''){
+                    Painel::deleteFile($imagem);
+                    //Existe o upload da imagem.
+
+                  $sql = PgSql::conectar()->prepare("UPDATE sissrh.tbrh_funcionario SET matricula=?,nome=?,login=?,email=?,cpf=?,sexo=?,endereco=?,bairro=?,cep=?,telefone=?,celular=?,data_nascimento=?,nome_pai=?,estado_civil=?,senha=?,cod_tipo_funcionario=?,cod_grupo_ocupacional=?,inativo=?,nome_mae=?,cidade=?,modificado=?,imagem=? WHERE cod_funcionario=? ");
+                  $sql->execute(array($matricula,$nome,$login,$email,$cpf,$sexo,$endereco,$bairro,$cep,$ramal,$celular,$dataNascimento,$nomePai,$estadoCivil,$senha,$tipoFuncionario,$grupoOcupacional,$status,$nomeMae,$cidade,$dataModificado,$imagem,$codFuncionario ));
                   Painel::alert('sucesso', 'As informações do funcionário foram atualizadas com sucesso!');
 
                 }
@@ -617,7 +623,7 @@ include('permissoes.php');
                         <option value="6">Cedido</option>
                       </select>
                       <label for="codTipoFuncionario" class="form-label">Tipo de Funcionário:</label>
-                      
+
                     </div>
                   </div>
 
@@ -657,7 +663,8 @@ include('permissoes.php');
                   <div class="row mb-3">
                     <label for="inputNumber" class="col-sm-2 col-form-label">Imagem Perfil do Usuário</label>
                     <div class="col-sm-6">
-                      <input class="form-control" type="file" id="formFile">
+                      <input class="form-control" name="imagem" type="file" id="formFile">
+                      <input class="form-control" name="imagem_atual" type="hidden" id="formFile" value="<?php echo $_SESSION['imagem']; ?>">
                     </div>
                   </div>
 
