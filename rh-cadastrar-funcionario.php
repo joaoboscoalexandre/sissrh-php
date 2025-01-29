@@ -451,7 +451,7 @@ include('permissoes.php');
                   $funcionario = $query->fetch();
                 ?>
 
-                <form method="post" class="row g-3">
+                <form method="post" class="row g-3" enctype="multipart/form-data" >
 
                   <input type="hidden" name="cod_funcionario" value="<?php echo $funcionario['cod_funcionario']; ?>" >
 
@@ -524,7 +524,7 @@ include('permissoes.php');
 
                   <div class="col-md-2">
                     <div class="form-floating">
-                      <input type="text" name="cep" class="form-control" value="<?php echo $funcionario['cep']; ?>" required>
+                      <input type="text" name="cep" id="cep" class="form-control" maxlength="9" onblur="pesquisacep(this.value);" value="<?php echo $funcionario['cep']; ?>" required>
                       <label for="cep" class="form-label">CEP:</label>
                     </div>
                   </div>
@@ -566,7 +566,7 @@ include('permissoes.php');
 
                   <div class="col-md-2">
                     <div class="form-floating">
-                      <input type="text" name="ramal" class="form-control" value="<?php echo $funcionario['telefone']; ?>" required>
+                      <input type="text" name="ramal" class="form-control" value="<?php echo $funcionario['telefone']; ?>" >
                       <label for="ramal" class="form-label">Ramal SRH:</label>
                     </div>
                   </div>
@@ -617,6 +617,7 @@ include('permissoes.php');
                         <option value="6">Cedido</option>
                       </select>
                       <label for="codTipoFuncionario" class="form-label">Tipo de Funcionário:</label>
+                      
                     </div>
                   </div>
 
@@ -650,6 +651,13 @@ include('permissoes.php');
                         <option value="true" <?php echo  $funcionario['inativo'] == "false" ? 'selected' : ''; ?>>Inativo</option>
                       </select>
                       <label for="status" class="form-label">Status:</label>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="inputNumber" class="col-sm-2 col-form-label">Imagem Perfil do Usuário</label>
+                    <div class="col-sm-6">
+                      <input class="form-control" type="file" id="formFile">
                     </div>
                   </div>
 
