@@ -1,0 +1,42 @@
+ANÁLISE DE REQUISITOS
+
+- ENTENDER O PROBLEMA
+
+- Fazer as perguntas CERTAS
+	- O que te atrapalha, ou atrapalha o seu trabalho?
+	- Quem é afetado por esse problema?
+	- Qual a consequência disso?
+	- Gera um desperdício de trabalho?
+	- Muito esforço manual ou operacional?
+	- Algum tipo de retrabalho?
+	- Será que faz a empresa ganhar menos dinheiro, ou gastar mais do que devia?
+
+- DEFINIR A SOLUÇÃO DO PROBLEMA
+	- Não tente fazer sozinho (envolva outros programadores e principalmente o usuário
+	- DICA: se parecer difícil, talvez não seja a melhor solução
+
+- DETALHAR A SOLUÇÃO DO NEGÓCIO
+	- Ainda não é CÓDIGO
+	- Desenrolar informações que são claras
+
+- PLANO DE TESTES
+	- Quando o [USUÁRIO]
+	[EXECUTA A AÇÃO]
+	[E OCORRE A REGRA DO NEGÓCIO]
+	deve [ACONTECER O RESULTADO ESPERADO]
+
+	Exemplo:
+	Quando o cliente clicar em consultar e a data da entrada for anterior à data atual + 5 dias.
+	Deve exibir a mensagem "A reserva deve ser feita com 5 dias de antecedência."
+
+	Quando o cliente clicar em consultar e a data da entrada for igual à data atual + 5 dias.
+	Deve exibir a mensagem "Quarto disponível faça a sua reserva!."	
+
+- DETALHAR AS ATIVIDADES TÉCNICAS E ORÇAMENTO
+	- É o que o programador já faz hoje, mas agora com EMBASAMENTO
+	- Use o PLANO DE TESTES
+	- IMPORTANTE: O usuário precisa participar ativamente na fase da análise
+
+- PROGRAMAR
+	- Agora é mão na massa!
+

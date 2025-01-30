@@ -1,0 +1,42 @@
+
+
+SELECT * FROM diaria.tbdiaria_reserva_veiculo
+WHERE data_hora_saida BETWEEN '$data_inicio'::timestamp AND '$data_fim'::timestamp
+AND data_hora_retorno BETWEEN '$data_inicio'::timestamp AND '$data_fim'::timestamp
+AND id_veiculo = $id_veiculo
+
+
+SELECT r.id_reserva, s.nome_sala, st.nm_setor, r.nome_solicitante, a.nome_atividade, r.descricao_atividade, r.data_utilizacao, r.hora_inicio, r.hora_fim, r.data_cadastro
+FROM reservasala.tbreserva_reserva r, reservasala.tbreserva_sala s, reservasala.tbreserva_atividade a, reservasala.tbreserva_setor st   
+WHERE r.id_sala = s.id_sala AND  r.id_atividade = a.id_nome_atividade AND r.id_setor = st.id_setor ORDER BY hora_inicio
+ 
+ 
+SELECT r.id_reserva, r.id_sala, s.nome_sala, st.nm_setor, r.nome_solicitante, a.nome_atividade, r.descricao_atividade, r.data_utilizacao, r.hora_inicio, r.hora_fim, r.data_cadastro
+FROM reservasala.tbreserva_reserva r, reservasala.tbreserva_sala s, reservasala.tbreserva_atividade a, reservasala.tbreserva_setor st  
+WHERE '2024-04-16 08:20' BETWEEN hora_inicio AND hora_fim AND r.id_sala = s.id_sala AND r.id_atividade = a.id_nome_atividade AND r.id_setor = st.id_setor AND r.id_sala = 2 ORDER BY hora_inicio
+
+ 
+ 
+ SELECT 'TOMORROW'::date, 
+ date_trunc('week','TOMORROW'::date)::date AS "Segunda", 
+ date_trunc('week','TOMORROW'::date)::date+1 AS "Terça", 
+ date_trunc('week','TOMORROW'::date)::date+2 AS "Quarta",
+ date_trunc('week','TOMORROW'::date)::date+3 AS "Quinta",
+ date_trunc('week','TOMORROW'::date)::date+4 AS "Sexta"
+
+'TOMORROW'::date)::date+2 AS "Quarta",
+'TOMORROW'::date)::date+3 AS "Quinta",
+'TOMORROW'::date)::date+4 AS "Sexta";
+
+
+SELECT 'TOMORROW'::date, date_trunc('week',
+'TOMORROW'::date) AS "2ª FEIRA", date_trunc('week',
+'TOMORROW'::date)+'6 days'::interval AS "DOMINGO";
+
+
+select (now()::date + ( 1 - date_part('dow',now()::date)::integer) ) as "Segunda",
+(now()::date + ( 2 - date_part('dow',now()::date)::integer) ) as "Terça", 
+(now()::date + ( 3 - date_part('dow',now()::date)::integer) ) as "Quarta", 
+(now()::date + ( 4 - date_part('dow',now()::date)::integer) ) as "Quinta", 
+(now()::date + ( 5 - date_part('dow',now()::date)::integer) ) as "Sexta"
+
