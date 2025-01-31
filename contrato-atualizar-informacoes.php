@@ -197,7 +197,7 @@
                 <table class="table table-sm">
                   <thead>
                     <tr>
-                      <th scope="col">Número do Contrato</th>
+                      <th scope="col">Nr do Contrato</th>
                       <th scope="col">Objeto do Contrato</th>
                     </tr>
                   </thead>
@@ -235,9 +235,9 @@
                 <table class="table table-sm">
                   <thead>
                     <tr>
-                      <th scope="col">Nr do SIC</th>
+                      <th scope="col">Nr SIC</th>
                       <th scope="col">Fonte de Recurso</th>
-                      <th scope="col"><center>Valor do Contrato</th>
+                      <th scope="col"><center>Valor Contrato</th>
                       <th scope="col"><center>Valor Pago</th>
                       <th scope="col"><center>Assinatura</center></th>
                     </tr>
@@ -258,10 +258,8 @@
                     <tr>
                       <th scope="col"><center>Início</center></th>
                       <th scope="col"><center>Término Previsto</center></th>
-                      <th scope="col"><center>Término Efetivo</center></th>
                       <th scope="col"><center>Publicação</center></th>
                       <th scope="col"><center>Ordem Serviço</center></th>
-                      <th scope="col"><center>Aditivo</center></th>
                       <th scope="col"><center>Responsável/Gestor</center></th>
                       <th scope="col"><center>Url Ceará Transparente</center></th>
                     </tr>
@@ -270,10 +268,8 @@
                     <tr>
                       <td><center><?php echo date('d/m/Y', strtotime($contrato['data_inicio'])); ?></center></td>
                       <td><center><?php echo date('d/m/Y', strtotime($contrato['data_termino_previsto'])); ?></center></td>
-                      <td><center><?php echo date('d/m/Y', strtotime($contrato['data_termino_efetivo'])); ?></center></td>
                       <td><center><?php echo date('d/m/Y', strtotime($contrato['data_publicacao'])); ?></center></td>
                       <td><center><?php echo date('d/m/Y', strtotime($contrato['data_ordem_servico'])); ?></center></td>
-                      <td><center><?php echo date('d/m/Y', strtotime($contrato['data_aditivo'])); ?></center></td>
                       <td><center><?php echo $contrato['responsavel_gestor']; ?></center></td>
                       <td><center><?php echo $contrato['url_hiperlink']; ?></center></td>
                     </tr>
@@ -390,7 +386,7 @@
                       <td><center><?php echo date('d/m/Y - H:i:s', strtotime($value['data_atualizacao'])); ?></center></td>
                       <td><center><?php echo $value['responsavel'] ?></center></td>
                       <td><center><a href="#" data-bs-toggle="modal" data-bs-target="#editarContrato<?php echo $value['cod_acompanhamento']; ?>"><i class="bi bi-pencil-square"></i></a>
-                      <a href="#" target="_blank" onclick="parent.location.href ='<?php echo INCLUDE_PATH; ?>relatorios/historico-contrato-pdf.php?codContrato=<?php echo $_GET['codContrato']; ?>'"><i class="bi bi-file-earmark-pdf"></i></a></center>
+                      <a href="#" onclick="parent.location.href ='<?php echo INCLUDE_PATH; ?>relatorios/historico-contrato-pdf.php?codContrato=<?php echo $_GET['codContrato']; ?>'" ><i class="bi bi-file-earmark-pdf"></i></a></center>
                       </td>
                     </tr>
 

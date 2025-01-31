@@ -14,7 +14,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Super Administrador - SRH</title>
+  <title>Relatório de Análises da Comissão</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -49,19 +49,13 @@
   <main id="main" class="main">
 
   <div class="pagetitle">
-      <h1>Secretaria dos Recursos Hídricos | Situação dos Contratos - Análises da Comissão</h1>
+      <h1>Governo do Estado do Ceará | Secretaria dos Recursos Hídricos - SRH</h1>
   </div><!-- End Page Title -->
 
   <section class="section">
       <div class="row">
 
         <div class="col-lg-12">
-
-          <div class="card">
-            <div class="card-body">
-            <h5 class="card-title">Informações do Contrato</h5>
-            <hr>
-              <!-- Floating Labels Form -->
 
                 <?php
                     if(isset($_GET['codContrato'])){
@@ -71,17 +65,21 @@
                     }
                 ?>
 
-                <!-- Small tables -->
+          <div class="card">
+            <div class="card-body">
+            <h5 class="card-title">Relatório da Análises da Comissão e Situação do Contrato Nr <?php echo $contrato['nr_contrato'] ?></h5>
+            <hr>
+              <!-- Floating Labels Form -->
+
+              <!-- Small tables -->
                 <table class="table table-bordered border-primary">
                   <thead>
                     <tr>
-                      <th scope="col">Número do Contrato</th>
                       <th scope="col">Objeto do Contrato</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <th scope="row"><?php echo $contrato['nr_contrato'] ?></th>
                       <td><?php echo $contrato['objeto'] ?></td>
                     </tr>
                   </tbody>
@@ -93,7 +91,7 @@
                       <th scope="col">Contratante</th>
                       <th scope="col">Contratado</th>
                       <th scope="col">CPF/CNPJ</th>
-                      <th scope="col">Tipo de Contrato</th>
+                      <th scope="col">Tipo Contrato</th>
                       <th scope="col">Situação</th>
                       <th scope="col">Cód. Contrato</th>
                     </tr>
@@ -113,9 +111,9 @@
                 <table class="table table-sm">
                   <thead>
                     <tr>
-                      <th scope="col">Nr do SIC</th>
+                      <th scope="col">Nr SIC</th>
                       <th scope="col">Fonte de Recurso</th>
-                      <th scope="col"><center>Valor do Contrato</th>
+                      <th scope="col"><center>Valor Contrato</th>
                       <th scope="col"><center>Valor Pago</th>
                       <th scope="col"><center>Assinatura</center></th>
                     </tr>
@@ -136,10 +134,7 @@
                     <tr>
                       <th scope="col"><center>Início</center></th>
                       <th scope="col"><center>Término Previsto</center></th>
-                      <th scope="col"><center>Término Efetivo</center></th>
                       <th scope="col"><center>Publicação</center></th>
-                      <th scope="col"><center>Ordem Serviço</center></th>
-                      <th scope="col"><center>Aditivo</center></th>
                       <th scope="col"><center>Responsável/Gestor</center></th>
                       <th scope="col"><center>Url Ceará Transparente</center></th>
                     </tr>
@@ -148,10 +143,7 @@
                     <tr>
                       <td><center><?php echo date('d/m/Y', strtotime($contrato['data_inicio'])); ?></center></td>
                       <td><center><?php echo date('d/m/Y', strtotime($contrato['data_termino_previsto'])); ?></center></td>
-                      <td><center><?php echo date('d/m/Y', strtotime($contrato['data_termino_efetivo'])); ?></center></td>
                       <td><center><?php echo date('d/m/Y', strtotime($contrato['data_publicacao'])); ?></center></td>
-                      <td><center><?php echo date('d/m/Y', strtotime($contrato['data_ordem_servico'])); ?></center></td>
-                      <td><center><?php echo date('d/m/Y', strtotime($contrato['data_aditivo'])); ?></center></td>
                       <td><center><?php echo $contrato['responsavel_gestor']; ?></center></td>
                       <td><center><?php echo $contrato['url_hiperlink']; ?></center></td>
                     </tr>
@@ -159,9 +151,8 @@
                 </table>
 
                 <!-- End small tables -->
-                <br/>
-                
-                <div class="alert alert-primary alert-dismissible fade show" ><center><strong>HISTÓRICO DE ACOMPANHAMENTO DO CONTRATO</strong> </center></div>
+                <br/>                
+                <center><strong>HISTÓRICO DE ACOMPANHAMENTO DO CONTRATO</strong> </center>
 
                   <?php
                       if(isset($_POST['acao']) && $_POST['acao'] == 'alterar'){

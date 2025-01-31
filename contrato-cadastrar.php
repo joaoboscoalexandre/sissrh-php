@@ -678,9 +678,7 @@
                     <tr>
                       <th scope="col">Nº Contrato</th>
                       <th scope="col">Contratado</th>
-                      <th scope="col"><center>Data Início</center></th>
-                      <th scope="col"><center>Data Término</center></th>
-                      <th scope="col"><center>Dias p/ Término</center></th>
+                      <th scope="col"><center>Objeto do Contrato</center></th>
                       <th scope="col"><center>Ações</center></th>
                     </tr>
                   </thead>
@@ -694,44 +692,8 @@
                     <tr>
                       <td><?php echo $value['nr_contrato']; ?></td>
                       <td><?php echo $value['contratado']; ?></td>
-                      <td><center><?php echo ($value['data_inicio'] == '1969-12-31') ? '00/00/0000' : date('d/m/Y', strtotime($value['data_inicio'])); ?></center></td>
-                      <td><center><?php echo ($value['data_termino_previsto'] == '1969-12-31') ? '00/00/0000' : date('d/m/Y', strtotime($value['data_termino_previsto'])); ?></center></td>
-                      <td> <center>
-                      <?php 
-                      $dataTermino = new DateTime($value['data_termino_previsto']);
-                      $dataAtual = new DateTime(date('Y-m-d'));
-                      $diferenca = $dataAtual->diff($dataTermino);
-                      //echo $diferenca->format('%a dia(s)');                                            
-                      $diferencaNumber = $diferenca->format('%a');
-                      
-                      if($diferencaNumber >90){
-                        echo "<div class='alert alert-success bg-success text-light border-0 alert-dismissible fade show' role='alert'> "
-                        .$diferenca->format('%a').' dias'.
-                      " </div>";
-                      } else if($diferencaNumber >60 && $diferencaNumber <=90){
-                        echo "<div class='alert alert-primary bg-primary text-light border-0 alert-dismissible fade show' role='alert'> "
-                        .$diferenca->format('%a').' dias'.
-                      " </div>";
-                      } else if($diferencaNumber >30 && $diferencaNumber <=60){
-                        echo "<div class='alert alert-warning bg-warning text-light border-0 alert-dismissible fade show' role='alert'><strong> "
-                        .$diferenca->format('%a').' dias'.
-                      " </strong></div>";
-                      } else if($diferencaNumber >0 && $diferencaNumber <=30){
-                        echo "<div class='alert alert-danger bg-danger text-light border-0 alert-dismissible fade show' role='alert'><strong> "
-                        .$diferenca->format('%a').' dias'.
-                      " </strong></div>";
-                      }
-                      else if($diferencaNumber <=0){
-                        echo "<div class='alert alert-danger bg-danger text-light border-0 alert-dismissible fade show' role='alert'>
-                        <strong>Contrato com o Prazo Vencido!</strong>
-                        </div>";
-                      }
-                      
-                      ?>
-                      </center>
-                    </td>
-                      <td><center><a href="<?php echo INCLUDE_PATH ?>contrato-cadastrar.php?editar=true&codContrato=<?php echo $value['cod_contrato']; ?>"><i class="bi bi-pencil-square"></i></a>&nbsp
-                      <a href="#" target="_blank" onclick="parent.location.href ='<?php echo INCLUDE_PATH; ?>relatorios/historico-contrato-pdf.php?codContrato=<?php echo $value['cod_contrato']; ?>'"><i class="bi bi-file-earmark-pdf"></i></a></center></td>
+                      <td><?php echo $value['objeto']; ?></td>
+                      <td><center><a href="<?php echo INCLUDE_PATH ?>contrato-cadastrar.php?editar=true&codContrato=<?php echo $value['cod_contrato']; ?>"><i class="bi bi-pencil-square"></i></a>
                     </tr>
                     <?php
                       }

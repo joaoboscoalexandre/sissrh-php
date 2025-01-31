@@ -339,15 +339,15 @@ include('permissoes.php');
                         echo "<div class='alert alert-success bg-success text-light border-0 alert-dismissible fade show' role='alert'> "
                         .$diferenca->format('%a').' dias'.
                       " </div>";
-                      } else if($diferencaNumber >60 && $diferencaNumber <=90){
+                      } else if($diferencaNumber >75 && $diferencaNumber <=90){
                         echo "<div class='alert alert-primary bg-primary text-light border-0 alert-dismissible fade show' role='alert'> "
                         .$diferenca->format('%a').' dias'.
                       " </div>";
-                      } else if($diferencaNumber >30 && $diferencaNumber <=60){
+                      } else if($diferencaNumber >45 && $diferencaNumber <=75){
                         echo "<div class='alert alert-warning bg-warning text-light border-0 alert-dismissible fade show' role='alert'><strong> "
                         .$diferenca->format('%a').' dias'.
                       " </strong></div>";
-                      } else if($diferencaNumber >0 && $diferencaNumber <=30){
+                      } else if($diferencaNumber >0 && $diferencaNumber <=45){
                         echo "<div class='alert alert-danger bg-danger text-light border-0 alert-dismissible fade show' role='alert'><strong> "
                         .$diferenca->format('%a').' dias'.
                       " </strong></div>";
@@ -362,7 +362,7 @@ include('permissoes.php');
                       </center>
                     </td>
                       <td><center><a href="<?php echo INCLUDE_PATH ?>contrato-atualizar-informacoes.php?codContrato=<?php echo $value['cod_contrato']; ?>"><i class="bi bi-clipboard-data"></i></a>&nbsp;
-                      <a href="#" target="_blank" onclick="parent.location.href ='<?php echo INCLUDE_PATH; ?>relatorios/historico-contrato-pdf.php?codContrato=<?php echo $value['cod_contrato']; ?>'"><i class="bi bi-file-earmark-pdf"></i></a></center></td>
+                      <a href="#" onclick="parent.location.href ='<?php echo INCLUDE_PATH; ?>relatorios/historico-contrato-pdf.php?codContrato=<?php echo $value['cod_contrato']; ?>'" ><i class="bi bi-file-earmark-pdf"></i></a></center></td>
                     </tr>
                     <?php
                       }
