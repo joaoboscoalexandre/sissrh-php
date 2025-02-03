@@ -3,7 +3,7 @@
 require('../vendor/autoload.php');
 ob_start();
 $codContrato = $_GET['codContrato'];
-include('historico-contrato.php');
+include('contrato-relatorio-analise-individual-pdf.php');
 $conteudo = ob_get_contents();
 ob_end_clean();
 

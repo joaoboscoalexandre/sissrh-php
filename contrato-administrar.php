@@ -207,7 +207,6 @@ include('permissoes.php');
                       ?>
                     </h6>
                       <span class="text-success small pt-1 fw-bold"><?php $percentReg = ($qtdVig/$qtdCont)*100; echo intval($percentReg).'%'; ?></span><span class="text-muted small pt-2 ps-1"></span>
-
                     </div>
                   </div>
                 </div>
@@ -278,7 +277,7 @@ include('permissoes.php');
                 <i class="bi bi-file-earmark-pdf-fill"></i>
                 </div>
                 <div class="ps-3">
-                    <a href="contrato-cadastrar.php" class="btn btn-outline-warning">Análises da Comissão</a> 
+                <a class="btn btn-outline-warning" href="#" onclick="parent.location.href ='<?php echo INCLUDE_PATH; ?>relatorios/contrato-analise-comissao-geral.php?codContrato=<?php echo $value['cod_contrato']; ?>'" >Com término em até 60 dias</a>
                 </div>
               </div>
 
@@ -361,8 +360,8 @@ include('permissoes.php');
                       ?>
                       </center>
                     </td>
-                      <td><center><a href="<?php echo INCLUDE_PATH ?>contrato-atualizar-informacoes.php?codContrato=<?php echo $value['cod_contrato']; ?>"><i class="bi bi-clipboard-data"></i></a>&nbsp;
-                      <a href="#" onclick="parent.location.href ='<?php echo INCLUDE_PATH; ?>relatorios/historico-contrato-pdf.php?codContrato=<?php echo $value['cod_contrato']; ?>'" ><i class="bi bi-file-earmark-pdf"></i></a></center></td>
+                      <td><center><a href="<?php echo INCLUDE_PATH ?>contrato-atualizar-informacoes.php?codContrato=<?php echo $value['cod_contrato']; ?>"><i class="bi bi-calendar-plus"></i></a>&nbsp;
+                      <a href="#" onclick="parent.location.href ='<?php echo INCLUDE_PATH; ?>relatorios/contrato-analise-individual.php?codContrato=<?php echo $value['cod_contrato']; ?>'" ><i class="bi bi-clipboard-data"></i></a></center></td>
                     </tr>
                     <?php
                       }

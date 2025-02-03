@@ -447,6 +447,7 @@ include('permissoes.php');
                   $sql->execute(array($matricula,$nome,$login,$email,$cpf,$sexo,$endereco,$bairro,$cep,$ramal,$celular,$dataNascimento,$nomePai,$estadoCivil,$senha,$tipoFuncionario,$grupoOcupacional,$status,$nomeMae,$cidade,$dataModificado,$imagem,$codFuncionario ));
                   Painel::alert('sucesso', 'As informações do funcionário foram atualizadas com sucesso!');
 
+                  }
                 }
 
                 ?>
