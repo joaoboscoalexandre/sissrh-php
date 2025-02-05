@@ -1,0 +1,35 @@
+Key GitHub Sistema SRH
+SHA256:ulZWNfGq7akwIP+ablifi0IzjnKzDvjEO1IQXBBiqkc
+
+Url GitHub
+https://github.com/joaoboscoalexandre/sissrh-php
+
+Comandos de configurações
+git config --global user.name
+git config --global user.email
+git status
+git diff
+
+dar commit no repositório local
+git log (Lista os commits do repositório local)
+git add -A 
+git commit -m "Descrição"
+git add -A && git commit -m "descricao"
+
+
+Controle de versionamento de commit
+git reset --hard codigodacabeca (voltar para qualquer commit anterior)
+
+Conectar repositório remoto
+git remote -v (ver a url do repositório remoto)
+git remote rm origin (trocar a url do repositório remoto)
+git remote add origin https://github.com/joaoboscoalexandre/sissrh-php
+
+git pull origin master (Pegar do repositório remoto para o local)
+
+mandar commit para o remoto
+primeiro commit local
+git commit -m "descrição do commit"
+depois manda para o remoto
+git push origin master (remoto - local) 
+
