@@ -328,7 +328,7 @@ include('permissoes.php');
                     <td><?php echo $value['numero_registro']; ?></td>
                     <td><?php echo $value['empreendedor']; ?></td>
                     <td><?php echo $value['nome_barragem']; ?></td>
-                    <td><center><a href="<?php echo INCLUDE_PATH ?>barragem-validar.php?codBarragem=<?php echo $value['cod_barragem']; ?>"><i class="bi bi-pencil-square"></i></a>&nbsp;&nbsp;<a href=""><i class="bi bi-printer"></i></a></center></td>
+                    <td><center><a href="<?php echo INCLUDE_PATH ?>barragem-validar.php?codBarragem=<?php echo $value['cod_barragem']; ?>"><i class="bi bi-pencil-square"></i></a>&nbsp;&nbsp;<a href="<?php echo INCLUDE_PATH ?>barragem-infor-adicional.php?codBarragem=<?php echo $value['cod_barragem']; ?>"><i class="bi bi-clipboard-data"></i></a>&nbsp;&nbsp;<a href=""><i class="bi bi-printer"></i></a></center></td>
                   </tr>
                   <?php
                     }
