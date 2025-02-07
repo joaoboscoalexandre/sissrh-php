@@ -43,6 +43,15 @@
         $sistema04 = false;
     }
 
+    $system05 = PgSql::conectar()->prepare(" SELECT * FROM sissrh.tbadmin_sistema_pessoa WHERE cod_sistema = 5 AND cod_perfil = 2 AND cpf_usuario = ? ");
+    $system05->execute(array($_SESSION['cpf']));
+    if($system05->rowCount() == 1){
+        $sistema05 = true;
+    }
+    else {
+        $sistema05 = false;
+    }
+
 
 
 

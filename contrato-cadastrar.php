@@ -56,7 +56,7 @@
             
           </li>
           <li>
-            <a href="contrato-cadastrar.php"  class="active">
+            <a href="contrato-cadastrar.php" class="active">
               <i class="bi bi-circle"></i><span>Cadastrar Contratos</span>
             </a>
           </li>
