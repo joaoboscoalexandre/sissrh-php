@@ -196,7 +196,6 @@
 
     if(isset($_POST['acao']) && $_POST['acao'] == "cadastrar"){
 
-        
       $codBarragem = $_GET['codBarragem'];
       $assinado = $_POST['assinado'];
       $baciaHidrografica = $_POST['bacia_hidrografica'];
@@ -206,10 +205,11 @@
       $nomeSecundario = $_POST['nome_secundario_barragem'];
       $alturaFundacao = $_POST['altura_fundacao'];
       $alturaTerreno = $_POST['altura_terreno'];
+      $capacidade = $_POST['capacidade'];
 
-      $query = PgSql::conectar()->prepare("INSERT INTO sissrh.tbbarragem_infor_adicional (cod_barragem,assinado,bacia_hidrografica,gerencia_regional,data_emissao,registro_snisb,nome_secundario_barragem,altura_fundacao,altura_terreno) 
+      $query = PgSql::conectar()->prepare("INSERT INTO sissrh.tbbarragem_infor_adicional (cod_barragem,assinado,bacia_hidrografica,gerencia_regional,data_emissao,registro_snisb,nome_secundario_barragem,altura_fundacao,altura_terreno,capacidade) 
       VALUES (?,?,?,?,?,?,?,?) ");
-      $query->execute(array($codBarragem,$assinado,$baciaHidrografica,$gerenciaRecional,$dataEmissao,$registoSnisb,$nomeSecundario,$alturaFundacao));
+      $query->execute(array($codBarragem,$assinado,$baciaHidrografica,$gerenciaRecional,$dataEmissao,$registoSnisb,$nomeSecundario,$alturaFundacao,$alturaTerreno,$capacidade));
       Painel::alert("sucesso","As informações adicionais foram cadastradas com sucesso!");
 
     }
@@ -294,7 +294,6 @@
                           </div>
                       </div>
 
-
                                 <div class="col-md-2">
                                     <div class="form-floating">
                                         <input type="text" name="altura_fundacao" class="form-control">
@@ -304,7 +303,7 @@
 
                                 <div class="col-md-2">
                                     <div class="form-floating">
-                                        <input type="text" name="alturaTerreno" class="form-control">
+                                        <input type="text" name="altura_terreno" class="form-control">
                                         <label>Altura Terreno:</label>
                                     </div>
                                 </div>
@@ -312,7 +311,7 @@
                                 <div class="col-md-2">
                                     <div class="form-floating">
                                         <input type="text" name="capacidade" class="form-control">
-                                        <label>Capacidade (m³):</label>
+                                        <label>Capacidade (m²):</label>
                                     </div>
                                 </div>
 
