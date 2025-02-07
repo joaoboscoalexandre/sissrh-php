@@ -87,7 +87,7 @@
       </li><!-- End Tables Nav -->
       <?php } ?>
 
-      <?php if($sistema03 == true || $superAdmin == true){ ?>
+      <?php if($sistema02 == true || $superAdmin == true){ ?>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-barragem" data-bs-toggle="collapse" href="#">
           <i class="bi bi-water"></i><span>Cadastro Barragens</span><i class="bi bi-chevron-down ms-auto"></i>

@@ -70,6 +70,7 @@
                 $contrato->execute(array($prazo));
                 $contrato = $contrato->fetchAll();
                 foreach($contrato as $key => $value){
+                $codContrato = $value['cod_contrato'];
                ?>
 
               <!-- Small tables -->
@@ -90,15 +91,32 @@
                       <td><?php echo date('d/m/Y', strtotime($value['data_termino_previsto'])); ?></td>
                     </tr>
                   </tbody>
+                </table>
+                <table class="table table-sm">
                   <thead>
-                    <tr>
+                  <tr>
                     <th scope="col">Análise da Comissão</th>
-                    </tr>
+                    <th scope="col">Providências</th>
+                    <th scope="col">Observação</th>
+                    <th scope="col"><center>Dt. Atualização</center></th>
+                    <th scope="col"><center>Atualizado Por:</center></th>
+                  </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td><?php echo $value['analise']; ?></td>
-                    </tr>
+                    <?php
+                    $dados = PgSql::conectar()->prepare("SELECT * FROM sissrh.tbcontatos_acompanhamento WHERE cod_contrato = ? ORDER BY cod_acompanhamento DESC");
+                    $dados->execute(array($codContrato));
+                    $dados = $dados->fetchAll();
+                    foreach ($dados as $key => $value) {
+                    ?>
+                  <tr>
+                    <td><?php echo $value['analise_comissao']; ?></td>
+                    <td><?php echo $value['providencias'] ?></td>
+                    <td><?php echo $value['observacao'] ?></td>
+                    <td><center><?php echo date('d/m/Y - H:i:s', strtotime($value['data_atualizacao'])); ?></center></td>
+                    <td><center><?php echo $value['responsavel'] ?></center></td>
+                  </tr>
+                  <?php } ?>
                   </tbody>
                 </table>
                 <hr>

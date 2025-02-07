@@ -87,7 +87,7 @@ include('permissoes.php');
         </li><!-- End Tables Nav -->
       <?php } ?>
 
-      <?php if ($sistema03 == true || $superAdmin == true) { ?>
+      <?php if ($sistema02 == true || $superAdmin == true) { ?>
         <li class="nav-item">
           <a class="nav-link collapsed" data-bs-target="#tables-barragem" data-bs-toggle="collapse" href="#">
             <i class="bi bi-water"></i><span>Cadastro Barragens</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -105,6 +105,26 @@ include('permissoes.php');
             </li>
           </ul>
         </li><!-- End Tables Nav -->
+      <?php } ?>
+
+      <?php if($sistema05 == true || $superAdmin == true){ ?>
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-desapropriacao" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-house-fill"></i><span>Desapropriação</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-desapropriacao" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="desapropriacao-cadastro-agrovila.php">
+              <i class="bi bi-circle"></i><span>Cadastrar Agrovila</span>
+            </a>
+          </li>
+          <li>
+            <a href="desapropriacao-cadastro-familias.php">
+              <i class="bi bi-circle"></i><span>Cadastrar Famílias</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
       <?php } ?>
 
       <?php if ($sistema04 == true || $superAdmin == true) { ?>

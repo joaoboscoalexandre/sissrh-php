@@ -184,286 +184,540 @@ include('permissoes.php');
 
   <main id="main" class="main">
 
-    <div class="pagetitle">
-      <h1>Página de Cadastro de Sistemas - SRH</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.php">Principal</a></li>
-          <li class="breadcrumb-item active">Cadastrar Sistemas</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-
-    <section class="section">
+  <section class="section">
       <div class="row">
-        <div class="col-lg-7">
+
+        <div class="col-lg-12">
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Formulário Para Cadastro de Sistemas</h5>
-              <?php
+              <br/><br/>
+              <center><img src="assets/img/Logotipo_SRH.png" alt=""></center><br/>
+              <center><h5 class="card-title">CADASTRO DAS FAMÍLIAS A SEREM REASSENTADAS NA AGROVILA VILA GRAÇA (CRATEÚS)</h5></center>
+              <center><hr width="15%"></center>
+              <br/>
+              <?php 
+              if(isset($_POST['acao'])){
 
-              if (isset($_POST['acao']) && $_POST['acao'] == 'Cadastrar') {
-                $nomeSistema = $_POST['nome_sistema'];
-                $siglaSistema = $_POST['sigla_sistema'];
-                $urlAcesso = $_POST['url_acesso'];
-                $tipoLinguagem = $_POST['tipo_linguagem'];
-                $nomeDesenvolvedor = $_POST['nome_desenvolvedor'];
-                $statusSistema = $_POST['status_sistema'];
-                $dataCadastro = date('Y-m-d');
-                $flAtivo = $_POST['fl_ativo'];
-                $iconeSistema = $_POST['icone_sistema'];
+                $nm_nome = $_POST['nomeEmpreendedor'];
+                if($_POST['empreendedor1'] == 'fisico'){
+                  $ds_cpf_cnpj = $_POST['cpf1'];                  
+                } else {
+                  $ds_cpf_cnpj = $_POST['cnpj1'];                  
+                }
+                $ds_endereco = $_POST['endereco'];
+                $ds_email = $_POST['email'];
+                $ds_telefone = $_POST['tel_fixo'];
+                $ds_celular = $_POST['tel_celular'];
+                $ds_total_barragem = $_POST['qtd_bar'];
+                $nm_nome2 = $_POST['nomeEmpreendedor2'];
+                if($_POST['empreendedor2'] == 'fisico'){
+                  $ds_cpf_cnpj2 = $_POST['cpf2'];                  
+                } else {
+                  $ds_cpf_cnpj2 = $_POST['cnpj2'];                  
+                }
+                $ds_endereco2 = $_POST['endereco2'];
+                $ds_email2 = $_POST['email2'];
+                $ds_telefone2 = $_POST['tel_fixo2'];
+                $ds_celular2 = $_POST['tel_celular2'];
+                $nm_nome_barragem = $_POST['nomeBarragem'];
+                $ds_denominacao_barragem = $_POST['denominacaoBarragem'];
 
-                //$sql = PgSql::conectar()->prepare("INSERT INTO sissrh.tbadmin_sistemas (nome_sistema, sigla_sistema, url_acesso, tipo_linguagem, nome_desenvolvedor, status_sistema, data_cadastro, icone_sistema) VALUES (?,?,?,?,?,?,?,?) ");
-                //$sql->execute(array($nomeSistema, $siglaSistema, $urlAcesso, $tipoLinguagem, $nomeDesenvolvedor, $statusSistema, $dataCadastro,$flAtivo,$iconeSistema));
-                $sql = PgSql::conectar()->prepare("INSERT INTO sissrh.tbadmin_sistemas (nome_sistema, sigla_sistema, url_acesso, tipo_linguagem, nome_desenvolvedor, status_sistema, data_cadastro, icone_sistema) VALUES (?,?,?,?,?,?,?,?) ");
-                $sql->execute(array($nomeSistema, $siglaSistema, $urlAcesso, $tipoLinguagem, $nomeDesenvolvedor, $statusSistema, $dataCadastro, $iconeSistema));
-                Painel::alert('sucesso', 'Sistema cadastrado com sucesso!');
-              }
+                $cd_municipio = $_POST['municipiobarragem'];
+                $nome_municipio = PgSql::conectar()->prepare("SELECT ds_municipio FROM sicbar.tbsicbar_municipio WHERE cd_municipio = ? ");
+                $nome_municipio->execute(array($cd_municipio));
+                $nome_municipio = $nome_municipio->fetch()['ds_municipio'];
 
-              if (isset($_POST['acao']) && $_POST['acao'] == "editar") {
-                $codSistema = $_POST['cod_sistema'];
-                $nomeSistema = $_POST['nome_sistema'];
-                $siglaSistema = $_POST['sigla_sistema'];
-                $urlAcesso = $_POST['url_acesso'];
-                $tipoLinguagem = $_POST['tipo_linguagem'];
-                $nomeDesenvolvedor = $_POST['nome_desenvolvedor'];
-                $statusSistema = $_POST['status_sistema'];
-                $flAtivo = $_POST['fl_ativo'];  // "Ativo" ou "Inativo" enviado como 1 ou 0
-                $dataCadastro = date('Y-m-d');
-                $iconeSistema = $_POST['icone_sistema'];
+                $nr_coordenadan = $_POST['coord_N'];
+                $nr_coordenadae = $_POST['coord_E'];
+                $ds_finalidade_barragem = $_POST['usoBarragem'];
+                $ds_finalidade_barragem = implode(", ",$ds_finalidade_barragem);
 
-                // Verifica se os valores de status e fl_ativo não estão vazios e converte para 1 ou 0
-                $statusSistema = ($statusSistema == 'Em Produção' || $statusSistema == 'Em Desenvolvimento' || $statusSistema == 'Em Fase de Teste') ? $statusSistema : null;
-                $flAtivo = ($flAtivo == 'true') ? 1 : 0;  // Convertendo para 1 ou 0
+                $ds_tipo_barragem = $_POST['tipoBarragem'];
+                $ds_altura_macico = $_POST['alturaMacico'];
+                $ds_largura_coroamento = $_POST['larguraCoroamento'];
+                $ds_extensao_coroamento = $_POST['extencaoCoroamento'];
+                $ds_tipo_vertedouro = $_POST['tipoVertedouro'];
+                $ds_capacidade_reservatorio = $_POST['capacidadeReservatorio'];
+                $dt_preenchimento = date('Y-m-d');       
+                
+                $query = PgSql::conectar()->prepare("INSERT INTO sissrh.tbbarragem_cadastro (empreendedor, cpf_cnpj, endereco, email, telefone, celular, total_barragem, empreendedor2, cpf_cnpj2, 
+                endereco2, email2, telefone2, celular2, nome_barragem, denominacao_barragem, municipio, coordenadan, coordenadae, finalidade_barragem, tipo_barragem, altura_macico, 
+                largura_coroamento, extensao_coroamento, tipo_vertedouro, capacidade_reservatorio, data_cadastro) 
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                $query->execute(array($nm_nome, $ds_cpf_cnpj, $ds_endereco, $ds_email, $ds_telefone, $ds_celular, $ds_total_barragem, $nm_nome2, $ds_cpf_cnpj2, $ds_endereco2, $ds_email2, $ds_telefone2, $ds_celular2, $nm_nome_barragem, $ds_denominacao_barragem, $nome_municipio, $nr_coordenadan, $nr_coordenadae, $ds_finalidade_barragem, $ds_tipo_barragem, $ds_altura_macico, $ds_largura_coroamento, $ds_extensao_coroamento, $ds_tipo_vertedouro, $ds_capacidade_reservatorio, $dt_preenchimento));
+                
+                $mail = new PHPMailer;
+                $mail->isSMTP();
+                $mail->SMTPDebug = 0;
+                $mail->Host = 'smtp.hostinger.com';
+                $mail->Port = 587;
+                $mail->SMTPAuth = true;
+                $mail->Username = 'cadastrobarragem@jbwebdesigner.com.br';
+                $mail->Password = 'srhBarragem@2024!$';
+                $mail->setFrom('cadastrobarragem@jbwebdesigner.com.br', 'Cadastro de Barragem');
+                $mail->addAddress('joao.bosco@srh.ce.gov.br', 'Brenda Carneiro');
+                $mail->Subject = 'Nova Barragem Cadastrada no site da SRH';
+                $mail->msgHTML(file_get_contents('message.html'), __DIR__);
+                $mail->Body = 'Olá Brenda Carneiro, uma nova barragem foi cadastrada no site da SRH.<br/><br/> Atenciosamente!';
+                //$mail->addAttachment('test.txt');
+                if($mail->send()){
+                  Painel::alert('sucesso','Sua barragem foi cadastrada com sucesso na Secretaria dos Recursos Hídricos - SRH.<br/> Para maiores informações ligar para o Setor de Segurança de Barragens (85) 3492-9233.'); 
+                } 
 
-                // Prepare a consulta SQL para atualização
-                $sql = PgSql::conectar()->prepare("UPDATE sissrh.tbadmin_sistemas SET nome_sistema=?, sigla_sistema=?, url_acesso=?, tipo_linguagem=?, nome_desenvolvedor=?, status_sistema=?, data_cadastro=?, fl_ativo=?, icone_sistema=? WHERE cod_sistema=?");
-                $sql->execute(array($nomeSistema, $siglaSistema, $urlAcesso, $tipoLinguagem, $nomeDesenvolvedor, $statusSistema, $dataCadastro, $flAtivo, $iconeSistema, $codSistema));
-                Painel::alert('sucesso', 'Sistema editado com sucesso!');
-              }
+              } 
 
               ?>
-
-              <!-- Multi Columns Form -->
-              <form class="row g-3" method="post" enctype="multipart/form-data">
+              <div class="alert alert-primary alert-dismissible fade show" ><strong>1. IDENTIFICAÇÃO</strong></div>
+              <!-- Floating Labels Form -->
+              <form method="post" class="row g-3">
                 <div class="col-md-8">
-                  <label for="sistma" class="form-label">Nome do Sistema</label>
-                  <input type="text" class="form-control" name="nome_sistema" required>
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="nomeEmpreendedor" placeholder="Nome Completo" >
+                    <label for="floatingName">Nome Completo do Titular</label>
+                  </div>
                 </div>
-                <div class="col-md-4">
-                  <label for="inputPassword5" class="form-label">Sigla do Sistema</label>
-                  <input type="text" class="form-control" name="sigla_sistema" required>
-                </div>
-                <div class="col-md-3">
-                  <label for="sistema" class="form-label">Ícone do Sistema</label>
-                  <input type="text" class="form-control" name="icone_sistema" required>
-                </div>
-                <div class="col-md-5">
-                  <label for="sistema" class="form-label">URL do Sistema</label>
-                  <input type="text" class="form-control" name="url_acesso" required>
-                </div>
-                <div class="col-md-4">
-                  <label for="inputState" class="form-label">Linguagem</label>
-                  <select name="tipo_linguagem" class="form-select" required>
-                    <option selected disabled value="">Escolha...</option>
-                    <option value="BOOTSTRAP - JAVAWEB">BOOTSTRAP - JAVAWEB</option>
-                    <option value="BOOTSTRAP - PHP - JAVA SCRIPT">BOOTSTRAP - PHP - JAVA SCRIPT</option>
-                    <option value="HTML - CSS - JAVA SCRIPT">HTML - CSS - JAVA SCRIPT</option>
-                  </select>
-                </div>
-                <div class="col-md-4">
-                  <label for="inputState" class="form-label">Desenvolvedor</label>
-                  <select class="form-select" name="nome_desenvolvedor" required>
-                    <option selected disabled value="">Escolha...</option>
-                    <option>AMANDA FARIAS</option>
-                    <option>JOÃO BOSCO</option>
-                    <option>AMANDA FARIAS - JOÃO BOSCO</option>
-                  </select>
-                </div>
-
-                <div class="col-md-3">
-                  <label for="inputState" class="form-label">Situação</label>
-                  <select class="form-select" name="nome_desenvolvedor" required>
-                    <option selected disabled value="">Escolha...</option>
-                    <option value="Em Produção">Em Produção</option>
-                    <option value="Em Desenvolvimento">Em Desenvolvimento</option>
-                    <option value="Em Fase de Teste">Em Fase de Teste</option>
-                  </select>
-                </div>
-
-                <div class="col-md-3">
-                  <label for="inputState" class="form-label">Status</label>
-                  <select class="form-select" name="nome_desenvolvedor" required>
-                    <option selected disabled value="">Escolha...</option>
-                    <option value="Ativo">Ativo</option>
-                    <option value="Inativo">Inativo</option>
-                  </select>
+               
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="text" name="cpf" class="form-control" placeholder="CPF" >
+                    <label for="floatingCPFCNPJ">CPF</label>
+                  </div>
                 </div>
 
                 <div class="col-md-2">
-                  <label for="inputZip" class="form-label">Data Cadastro</label>
-                  <input type="text" class="form-control" name="dataCadastro" value="<?php echo date('d/m/Y'); ?>" disabled>
-                </div><br />
+                  <div class="form-floating">
+                    <input type="text" name="rg" class="form-control" placeholder="rg" >
+                    <label for="floatingCPFCNPJ">RG - Órgão Emissor</label>
+                  </div>
+                </div>
 
-                  <center>
-                    <button type="submit" name="acao" value="editar" class="btn btn-primary">Salvar Alterações</button>
-                  </center>
+                <div class="col-md-4">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="nome_pai" placeholder="Nome do Pai" >
+                    <label for="floatingName">Nome do Pai</label>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="nome_mae" placeholder="Nome do Mãe">
+                    <label for="floatingEmail">Nome do Mãe</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="sexo" name="sexo" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="Masculino">Masculino</option>
+                      <option value ="Feminino">Feminino</option>
+                    </select>
+                    <label for="floatingSelect">Sexo</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="date" class="form-control" name="data_nascimento" >
+                    <label for="floatingName">Data de Nascimento</label>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="naturalidade" >
+                    <label for="floatingName">Naturalidade</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="Municipio" name="uf" >
+                      <option selected disabled>Selecione a UF</option>
+                      <?php
+                        $uf = PgSql::conectar()->prepare("SELECT * FROM sissrh.tbadmin_estados ORDER BY nome_estado ASC");
+                        $uf->execute();
+                        $uf = $uf->fetchAll();
+                        foreach($uf as $key => $value){
+                        ?>
+                        <option value ="<?php echo $value['cod_estado']; ?>"><?php echo $value['sigla_estado']; ?></option>;
+                      <?php } ?>
+                    </select>
+                    <label for="floatingSelect">UF</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="apelido" >
+                    <label for="floatingName">Apelido</label>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="estado_civil" name="estado_civil" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="Solteiro">Solteiro</option>
+                      <option value ="Casado">Casado</option>
+                      <option value ="Viúvo">Viúvo</option>
+                      <option value ="Divorciado ou Separado Judicialmente">Divorciado ou Separado Judicialmente</option>
+                      <option value ="União Estável">União Estável</option>
+                    </select>
+                    <label for="floatingSelect">Estado Civil</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="telefone_email" >
+                    <label for="floatingName">Telefone e E-mail</label>
+                  </div>
+                </div>
 
+                <div class="alert alert-primary alert-dismissible fade show"><strong>2. ESCOLARIDADE | 3. TRABALHO</strong></div>
+                <div class="col-md-3">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="escolaridade" name="escolaridade" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="Não Alfabetizado">Não Alfabetizado</option>
+                      <option value ="Alfabetizado">Alfabetizado</option>
+                      <option value ="Ensino Fundamental Incompleto">Ensino Fundamental Incompleto</option>
+                      <option value ="Ensino Fundamental Completo">Ensino Fundamental Completo</option>
+                      <option value ="Ensino Médio Incompleto">Ensino Médio Incompleto</option>
+                      <option value ="Ensino Médio Completo">Ensino Médio Completo</option>
+                      <option value ="Nível Superior Incompleto">Nível Superior Incompleto</option>
+                      <option value ="Nível Superior Completo">Nível Superior Completo</option>
+                      <option value ="Pós-graduação Incompleto">Pós-graduação Incompleto</option>
+                      <option value ="Pós-graduação Completo">Pós-graduação Completo</option>
+                    </select>
+                    <label for="floatingSelect">Escolaridade</label>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <label for="floatingSelect">Qual a atividade desenvolvida?</label>
+                  <div class="form-floating">
+                  <input class="form-check-input" type="checkbox" name="atividade_desenvolvida[]" value="Agricultura" />&nbsp;Agricultura&nbsp;&nbsp;
+                  <input class="form-check-input" type="checkbox" name="atividade_desenvolvida[]" value="Pecuária" />&nbsp;Pecuária&nbsp;&nbsp;
+                  <input class="form-check-input" type="checkbox" name="atividade_desenvolvida[]" value="Artesanato" />&nbsp;Artesanato&nbsp;&nbsp;
+                  <input class="form-check-input" type="checkbox" name="atividade_desenvolvida[]" value="Comércio" />&nbsp;Comércio&nbsp;&nbsp;
+                  <input class="form-check-input" type="checkbox" name="atividade_desenvolvida[]" value="Pesca" />&nbsp;Pesca&nbsp;&nbsp;
+                  <input class="form-check-input" type="checkbox" name="atividade_desenvolvida[]" value="Outros" />&nbsp;Outros&nbsp;&nbsp;
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="carteira_assinada" name="carteira_assinada" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="True">Sim</option>
+                      <option value ="False">Não</option>
+                    </select>
+                    <label for="floatingSelect">Possuir carteira assinada?</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="aposentado" name="aposentado" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="True">Sim</option>
+                      <option value ="False">Não</option>
+                    </select>
+                    <label for="floatingSelect">É aposentado?</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="cultiva_area" name="cultiva_area" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="True">Sim</option>
+                      <option value ="False">Não</option>
+                    </select>
+                    <label for="floatingSelect">Cultiva área em questão?</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="area_cultivada" placeholder="area_cultivada">
+                    <label for="floatingName">Caso afirmativo, qual a área?</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="dap_caf_ativo" name="dap_caf_ativo" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="True">Sim</option>
+                      <option value ="False">Não</option>
+                    </select>
+                    <label for="floatingSelect">Possuir DAP ou CAF  ativa</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="dap_caf_ativo" name="dap_caf_ativo" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="True">Sim</option>
+                      <option value ="False">Não</option>
+                    </select>
+                    <label for="floatingSelect">Ocupante de cargo público?</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="dap_caf_ativo" name="dap_caf_ativo" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="True">Sim</option>
+                      <option value ="False">Não</option>
+                    </select>
+                    <label for="floatingSelect">Ocupante de cargo público?</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="renda_familiar" placeholder="Renda Familiar</label>
+                  </div>" >
+                    <label for="floatingName">Renda Familiar R$</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="dap_caf_ativo" name="dap_caf_ativo" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="True">Sim</option>
+                      <option value ="False">Não</option>
+                    </select>
+                    <label for="floatingSelect">Ocupante de cargo público?</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="dap_caf_ativo" name="dap_caf_ativo" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="True">Sim</option>
+                      <option value ="False">Não</option>
+                    </select>
+                    <label for="floatingSelect">Caso afirmativo, o exercício do cargo, do emprego ou da função pública é compatível com a exploração da parcela pelo indivíduo ou pelo núcleo familiar?</label>
+                  </div>
+                </div>
+
+                <div class="alert alert-primary alert-dismissible fade show" ><strong>4. ASSISTÊNCIA TÉCNICA</strong></div>
+                <div class="col-md-4">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="assistencia_governo" name="assistencia_governo" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="True">Sim</option>
+                      <option value ="False">Não</option>
+                    </select>
+                    <label for="floatingSelect">Recebe assistência técnica de alguma entidade do governo?</label>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="orgao_entidade" >
+                    <label for="floating">Caso afirmativo, qual órgão/entidade?</label>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="frequencia_assistencia" >
+                    <label for="floating">Qual a frequência que recebe a assistência técnica?</label>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="orgao_entidade">
+                    <label for="floating">De que modo é realizada a assistência técnica?</label>
+                  </div>
+                </div>
+                  
+
+                <div class="alert alert-primary alert-dismissible fade show" ><strong>5. REPRESENTAÇÃO SOCIAL</strong></div>
+                <div class="col-md-7">
+                  <label for="floatingSelect">Participação Social</label>
+                  <div class="form-floating">
+                  <input class="form-check-input" type="checkbox" name="participacao_social[]" value="Associações Comunitárias" />&nbsp;Associações Comunitárias&nbsp;&nbsp;
+                  <input class="form-check-input" type="checkbox" name="participacao_social[]" value="Sindicato" />&nbsp;Sindicato&nbsp;&nbsp;
+                  <input class="form-check-input" type="checkbox" name="participacao_social[]" value="Cooperativas" />&nbsp;Cooperativas&nbsp;&nbsp;
+                  <input class="form-check-input" type="checkbox" name="participacao_social[]" value="Não parcitipa" />&nbsp;Não parcitipa&nbsp;&nbsp;
+                  <input class="form-check-input" type="checkbox" name="participacao_social[]" value="Outros" />&nbsp;Outros&nbsp;&nbsp;
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="servico_comunitario" name="servico_comunitario" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="True">Sim</option>
+                      <option value ="False">Não</option>
+                    </select>
+                    <label for="floatingSelect">Presta serviços de interesse comunitário à comunidade rural ou à vizinhança da área objeto do projeto de Reassentamento?</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="qual_comunitario">
+                    <label for="floatingCPFCNPJ">Caso afirmativo, qual?</label>
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="reforma_agraria" name="reforma_agraria" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="True">Sim</option>
+                      <option value ="False">Não</option>
+                    </select>
+                    <label for="floatingSelect">Participa ou participou de algum programa de reforma agrária, de regularização fundiária ou de crédito fundiário?</label>
+                  </div>
+                </div>
                 
-              </form><!-- End Multi Columns Form -->
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="programa_reforma">
+                    <label for="floatingCPFCNPJ">Caso afirmativo, qual?</label>
+                  </div>
+                </div>
+               
+                <div class="alert alert-primary alert-dismissible fade show" ><strong>6. MORADIA</strong></div>
+                
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="tempo_reside">
+                    <label for="floatingCPFCNPJ">Reside na Vila há quanto tempo?</label>
+                  </div>
+                </div>
+                
+                <div class="col-md-3">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="onde_reside">
+                    <label for="floatingCPFCNPJ">Não Reside na Vila Graça Onde reside?</label>
+                  </div>
+                </div>
 
+                <div class="col-md-3">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="tipo_exploracao">
+                    <label for="floatingCPFCNPJ">Tipo de Exploração da área</label>
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="reforma_agraria" name="reforma_agraria" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="True">Sim</option>
+                      <option value ="False">Não</option>
+                    </select>
+                    <label for="floatingSelect">Possui algum imóvel rural fora da área do imóvel em questão?</label>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="tipo_exploracao">
+                    <label for="floatingCPFCNPJ">Entre Pais/Filho(a)s/Irmão(ã)s, quantos membros de sua família ocupam terras na Agrovila?</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="reforma_agraria" name="reforma_agraria" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="True">Sim</option>
+                      <option value ="False">Não</option>
+                    </select>
+                    <label for="floatingSelect">Já mudou de endereço nas terras da Agrovila?</label>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="tipo_exploracao">
+                    <label for="floatingCPFCNPJ">Caso afirmativo, porque?</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="reforma_agraria" name="reforma_agraria" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="True">Sim</option>
+                      <option value ="False">Não</option>
+                    </select>
+                    <label for="floatingSelect">Já vendeu/trocou/negociou terras dentro da Agrovila?</label>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="tipo_exploracao">
+                    <label for="floatingCPFCNPJ">Caso afirmativo, porque?</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="reforma_agraria" name="reforma_agraria" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="True">Sim</option>
+                      <option value ="False">Não</option>
+                    </select>
+                    <label for="floatingSelect">Sua propriedade é suficiente para o sustento próprio de sua família?</label>
+                  </div>
+                </div>
+
+                <div class="alert alert-primary alert-dismissible fade show" ><strong>7. INFORMAÇÕES FAMILIARES</strong></div>
+                
+                <div class="col-md-3">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="alturaMacico" placeholder="Altura do Maciço (m)">
+                    <label for="floatingName">Nº de pessoas residentes no imóvel</label>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="larguraCoroamento" placeholder="Largura do Coroamento (m)">
+                    <label for="floatingCPFCNPJ">Nº de filhos residentes no imóvel</label>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="extencaoCoroamento" placeholder="Extensão do Coroamento (m)">
+                    <label for="floatingName">Nº de filhos residentes no imóvel</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="reforma_agraria" name="reforma_agraria" >
+                      <option selected disabled>Selecione</option>
+                      <option value ="True">Sim</option>
+                      <option value ="False">Não</option>
+                    </select>
+                    <label for="floatingSelect">Há pessoas com deficiência</label>
+                  </div>
+                </div>
+
+                <div class="alert alert-primary alert-dismissible fade show" ><strong>8. DECLARAÇÃO</strong></div>
+                <p>De acordo com art. 299 do Código Penal Brasileiro: é crime omitir, em documento público ou particular, declaração que dele devia constar, ou nele inserir ou fazer inserir declaração falsa ou diversa da que devia ser escrita, com o fim de prejudicar direito, criar obrigação ou alterar a verdade sobre fato juridicamente relevante, sob pena de reclusão, de um a cinco anos, e multa, se o documento é público.</p>
+                <div class="col-md-12">
+                  <div class="form-floating">
+                  <input class="form-check-input" type="checkbox" name="participacao_social[]" value="Associações Comunitárias" checked />&nbsp;&nbsp;DECLARO, para os devidos fins, que as informações prestadas neste formulário são verdadeiras e estar ciente e de acordo com todas as regras da SRH e do Código Penal Brasileiro.
+                  </div>
+                </div>
+                <div class="col-md-10">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="extencaoCoroamento" placeholder="Extensão do Coroamento (m)">
+                    <label for="floatingName">Endereço da Residência</label>
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="extencaoCoroamento" placeholder="Extensão do Coroamento (m)">
+                    <label for="floatingName">Data Cadastro</label>
+                  </div>
+                </div>
+
+                <div class="text-center">
+                    <br/>
+                  <button type="submit" name="acao" value="cadastrar" class="btn btn-primary">Cadastrar Titular da Família</button>
+                </div>
+
+              </form><!-- End floating Labels Form -->
             </div>
           </div>
 
         </div>
 
-        <div class="col-lg-5">
-
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Lista de Sistema - SRH</h5>
-
-              <!-- Table with stripped rows -->
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nome do Sistema</th>
-                    <th scope="col">Sigla</th>
-                    <th scope="col">Ativo</th>
-                    <th scope="col">Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php
-                  $sql = PgSql::conectar()->prepare(" SELECT * FROM sissrh.tbadmin_sistemas ORDER BY cod_sistema ASC ");
-                  $sql->execute();
-                  $sistemas = $sql->fetchAll();
-                  foreach ($sistemas as $key => $value) {
-                  ?>
-                    <tr>
-                      <th scope="row"><?php echo $value['cod_sistema']; ?></th>
-                      <td><?php echo $value['nome_sistema']; ?></td>
-                      <td><?php echo $value['sigla_sistema'] ?></td>
-                      <td>
-                        <center><?php echo $value['fl_ativo'] == 1 ? '<i class="ri-thumb-up-line"></i></button>' : '<i class="ri-thumb-down-line"></i>'; ?></center>
-                      </td>
-                      <td>
-                        <center><a href="#" data-bs-toggle="modal" data-bs-target="#sistemaModal<?php echo $value['cod_sistema']; ?>"><i class="bi bi-pencil"></i></a></center>
-                      </td>
-                    </tr>
-
-                    <!-- Modal de Edição -->
-                    <div class="modal fade" id="sistemaModal<?php echo $value['cod_sistema']; ?>" tabindex="-1">
-                      <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="card-title">Formulário para edição de dados do Sistema </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                            <form method="post">
-                              <input type="hidden" name="cod_sistema" value="<?php echo $value['cod_sistema']; ?>">
-                              <div class="row g-3">
-
-                                <!-- Nome do Sistema -->
-                                <div class="col-md-5">
-                                  <label for="nome_sistema" class="form-label">Nome do Sistema</label>
-                                  <input type="text" class="form-control" name="nome_sistema" value="<?php echo $value['nome_sistema']; ?>" required>
-                                </div>
-
-                                <!-- Sigla do Sistema -->
-                                <div class="col-md-3">
-                                  <label for="sigla_sistema" class="form-label">Sigla Sistema</label>
-                                  <input type="text" class="form-control" name="sigla_sistema" value="<?php echo $value['sigla_sistema']; ?>" required>
-                                </div>
-
-                                <!-- Url Sistema -->
-                                <div class="col-md-4">
-                                  <label for="url-sistema" class="form-label">URL do Sistema</label>
-                                  <input type="text" class="form-control" name="url_acesso" value="<?php echo $value['url_acesso']; ?>" required>
-                                </div>
-
-                                <!-- Ícone -->
-                                <div class="col-md-5">
-                                  <label for="sistema" class="form-label">Ícone do Sistema</label>
-                                  <input type="text" class="form-control" name="icone_sistema" value="<?php echo $value['icone_sistema']; ?>" required>
-                                </div>
-
-                                <!-- URL de Acesso -->
-                                <div class="col-md-4">
-                                  <label for="url_acesso" class="form-label">URL de Acesso</label>
-                                  <input type="text" class="form-control" name="url_acesso" value="<?php echo $value['url_acesso']; ?>" required>
-                                </div>
-
-                                <!-- Linguagem -->
-                                <div class="col-md-4">
-                                  <label for="tipo_linguagem" class="form-label">Linguagem</label>
-                                  <select name="tipo_linguagem" class="form-select" required>
-                                    <option value="BOOTSTRAP - JAVAWEB" <?php echo $value['tipo_linguagem'] == 'BOOTSTRAP - JAVAWEB' ? 'selected' : ''; ?>>BOOTSTRAP - JAVAWEB</option>
-                                    <option value="BOOTSTRAP - PHP - JAVA SCRIPT" <?php echo $value['tipo_linguagem'] == 'BOOTSTRAP - PHP - JAVA SCRIPT' ? 'selected' : ''; ?>>BOOTSTRAP - PHP - JAVA SCRIPT</option>
-                                    <option value="HTML - CSS - JAVA SCRIPT" <?php echo $value['tipo_linguagem'] == 'HTML - CSS - JAVA SCRIPT' ? 'selected' : ''; ?>>HTML - CSS - JAVA SCRIPT</option>
-                                  </select>
-                                </div>
-
-                                <!-- Desenvolvedor -->
-                                <div class="col-md-3">
-                                  <label for="desenvolvedor" class="form-label">Desenvolvedor</label>
-                                  <select class="form-select" name="nome_desenvolvedor" required>
-                                    <option value="<?php echo $value['nome_desenvolvedor']; ?>"><?php echo $value['nome_desenvolvedor']; ?></option>
-                                    <option value="AMANDA FARIAS">AMANDA FARIAS</option>
-                                    <option value="JOÃO BOSCO">JOÃO BOSCO</option>
-                                  </select>
-                                </div>
-
-                                <!-- Situação -->
-                                <div class="col-md-3">
-                                  <label for="situacao" class="form-label">Situação</label>
-                                  <select class="form-select" name="status_sistema" required>
-                                    <option selected disabled value="">Escolha...</option>
-                                    <option value="Em Produção" <?php echo $value['status_sistema'] == "Em Produção" ? 'selected' : ''; ?>>Em Produção</option>
-                                    <option value="Em Desenvolvimento" <?php echo $value['status_sistema'] == "Em Desenvolvimento" ? 'selected' : ''; ?>>Em Desenvolvimento</option>
-                                    <option value="Em Fase de Teste" <?php echo $value['status_sistema'] == "Em Fase de Teste" ? 'selected' : ''; ?>>Em Fase de Teste</option>
-                                  </select>
-                                </div>
-
-                                <!-- Status -->
-                                <div class="col-md-2">
-                                  <label for="status" class="form-label">Status</label>
-                                  <select class="form-select" name="fl_ativo" required>
-                                    <option selected disabled value="">Escolha...</option>
-                                    <option value="true" <?php echo $value['fl_ativo'] == 1 ? 'selected' : ''; ?>>Ativo</option>
-                                    <option value="false" <?php echo $value['fl_ativo'] == 0 ? 'selected' : ''; ?>>Inativo</option>
-                                  </select>
-                                </div>
-
-                                <!-- Botão de Edição -->
-                                <div class="modal-footer">
-                                  <center>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                    <button type="submit" name="acao" value="editar" class="btn btn-primary">Salvar Alterações</button>
-                                </div>
-                                </center>
-                              </div>
-                            </form>
-
-                          </div>
-                        </div>
-                      </div>
-                      <!-- Fim Modal -->
-                    </div>
-            </div>
-          </div>
-        <?php
-                  }
-        ?>
-        </tbody>
-        </table>
-        </div>
+      </div>
     </section>
 
-  </main><!-- End #main -->
+</main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
   <?php include('footer.php'); ?>
