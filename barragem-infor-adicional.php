@@ -187,11 +187,9 @@
   ?>
   
     <br/><br/>
-    <center><img src="assets/img/Logotipo_SRH.png" alt=""></center>
+    <center><img src="assets/img/Logotipo_SRH.png" alt=""></center><br/>
     <center><h5 class="card-title">Formulário para Cadastro de Informações Adicionais da Barragem<br/>
-    <?php echo $barragem['nome_barragem']; ?> </h5></center>
-    <br/><br/>
-
+    <?php echo $barragem['nome_barragem']; ?> </h5></center><br/>
     <?php
 
     if(isset($_POST['acao']) && $_POST['acao'] == "cadastrar"){
@@ -264,9 +262,7 @@
 
       ?>
 
-    <div class="alert alert-primary alert-dismissible fade show" >
-      I. INFORMAÇÕES INICIAIS
-    </div>
+    <div class="alert alert-primary alert-dismissible fade show" ><strong>I. INFORMAÇÕES INICIAIS</strong></div>
     <!-- Floating Labels Form -->
     <form method="post" class="row g-3">
         <!-- Selects and Inputs -->
@@ -405,9 +401,7 @@
                                     </div>
                                 </div>
 
-                                <div class="alert alert-primary alert-dismissible fade show">
-                                    II. OBJETIVOS
-                                </div>
+                                <div class="alert alert-primary alert-dismissible fade show"><strong>II. OBJETIVOS</strong></div>
 
                                 <div class="col-md-3">
                                     <div class="form-floating">
@@ -571,10 +565,7 @@
                                 </div>
 
                                 <!-- Informações Complementares-->
-                                <div class="alert alert-primary alert-dismissible fade show">
-                                    III. INFORMAÇÕES COMPLEMENTARES
-
-                                </div>
+                                <div class="alert alert-primary alert-dismissible fade show"><strong>III. INFORMAÇÕES COMPLEMENTARES</strong></div>
 
                                 <div class="col-md-2">
                                     <div class="form-floating mb-3">
@@ -687,9 +678,7 @@
                                 </div>
 
                                 <!--Pontuação-->
-                                <div class="alert alert-primary alert-dismissible fade show">
-                                    IV. CRI - PONTUAÇÕES
-                                </div>
+                                <div class="alert alert-primary alert-dismissible fade show"><strong>IV. CRI - PONTUAÇÕES</strong></div>
 
                                 <div class="col-md-2">
                                     <div class="form-floating">
