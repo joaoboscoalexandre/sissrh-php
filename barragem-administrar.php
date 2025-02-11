@@ -320,87 +320,51 @@ include('permissoes.php');
         </div><!-- End Right side columns -->
 
       <section class="section">
-      <div class="row">
-        <div class="col-lg-6">
+        <div class="row">
+          <div class="col-lg-12">
 
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Barragens com Registro de Identificação do Empreendedor - RIE</h5>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Relação de Barragens Cadatradas</h5>
 
-              <!-- Table with stripped rows -->
-              <table class="table datatable">
-                <thead>
-                  <tr>
-                  <th scope="col">Nº Reg.</th>
-                    <th scope="col">Nome do Proprietário</th>
+                <!-- Table with stripped rows -->
+                <table class="table datatable">
+                  <thead>
+                    <tr>
                     <th scope="col">Nome da Barragem</th>
+                    <th scope="col">Nome do Proprietário</th>
+                    <th scope="col">CPF | CNPJ</th>
+                    <th scope="col">Nº Reg.</th>
                     <th scope="col"><center>Ações</center></th>
-                  </tr>
-                </thead>
-                <tbody>
-                <?php
-                    $barragens = PgSql::conectar()->prepare(" SELECT * FROM sissrh.tbbarragem_cadastro WHERE cadastro_aprovado = 'true' ");
-                    $barragens->execute();
-                    $barragens = $barragens->fetchAll();
-                    foreach($barragens as $key => $value){
-                  ?>
-                  <tr>
-                    <td><?php echo $value['numero_registro']; ?></td>
-                    <td><?php echo $value['empreendedor']; ?></td>
-                    <td><?php echo $value['nome_barragem']; ?></td>
-                    <td><center><a href="<?php echo INCLUDE_PATH ?>barragem-validar.php?codBarragem=<?php echo $value['cod_barragem']; ?>"><i class="bi bi-pencil-square"></i></a>&nbsp;&nbsp;<a href="<?php echo INCLUDE_PATH ?>barragem-infor-adicional.php?codBarragem=<?php echo $value['cod_barragem']; ?>"><i class="bi bi-clipboard-data"></i></a>&nbsp;&nbsp;<a href=""><i class="bi bi-printer"></i></a></center></td>
-                  </tr>
+                    </tr>
+                  </thead>
+                  <tbody>
                   <?php
-                    }
+                      $barragens = PgSql::conectar()->prepare(" SELECT * FROM sissrh.tbbarragem_cadastro ORDER BY cod_barragem DESC");
+                      $barragens->execute();
+                      $barragens = $barragens->fetchAll();
+                      foreach($barragens as $key => $value){
                     ?>
-                </tbody>
-              </table>
-              <!-- End Table with stripped rows -->
-
+                    <tr>
+                      <td><?php echo $value['nome_barragem']; ?></td>
+                      <td><?php echo $value['empreendedor']; ?></td>
+                      <td><?php echo $value['cpf_cnpj']; ?></td>
+                      <td><?php echo $value['numero_registro']; ?></td>
+                      <td><center><a href="<?php echo INCLUDE_PATH ?>barragem-editar-validar.php?codBarragem=<?php echo $value['cod_barragem']; ?>"><i class="bi bi-pencil-square"></i></a>&nbsp;<a href="<?php echo INCLUDE_PATH ?>barragem-infor-adicional.php?codBarragem=<?php echo $value['cod_barragem']; ?>"><i class="bi bi-clipboard-plus"></i></a>&nbsp;
+                      <a href="#" onclick="parent.location.href ='<?php echo INCLUDE_PATH; ?>relatorios/registro-identificacao-empreendedor.php?codBarragem=<?php echo $value['cod_barragem']; ?>'" ><i class="bi bi-file-earmark-pdf"></i></a></center></td>
+                    </tr>
+                    <?php
+                      }
+                      ?>
+                  </tbody>
+                </table>
+                <!-- End Table with stripped rows -->
+              </div>
             </div>
+
           </div>
-
         </div>
-
-        <div class="col-lg-6">
-
-        <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Barragens Cadastradas e Pendentes do RIE</h5>
-               <!-- Table with stripped rows -->
-               <table class="table datatable">
-                <thead>
-                  <tr>
-                    <th scope="col">Nome do Proprietário</th>
-                    <th scope="col">Nome da Barragem</th>
-                    <th scope="col"><center>Ações</center></th>
-                  </tr>
-                </thead>
-                <tbody>
-                <?php
-                    $barragens = PgSql::conectar()->prepare(" SELECT * FROM sissrh.tbbarragem_cadastro WHERE cadastro_aprovado = 'false' ");
-                    $barragens->execute();
-                    $barragens = $barragens->fetchAll();
-                    foreach($barragens as $key => $value){
-                  ?>
-                  <tr>
-                    <td><?php echo $value['empreendedor']; ?></td>
-                    <td><?php echo $value['nome_barragem']; ?></td>
-                    <td><center><a href="<?php echo INCLUDE_PATH ?>barragem-validar.php?codBarragem=<?php echo $value['cod_barragem']; ?>"><i class="bi bi-clipboard-check"></i></a>&nbsp;&nbsp;<a href=""><i class="bi bi-trash"></i></a></center></td>
-                  </tr>
-                  <?php
-                    }
-                    ?>
-
-                </tbody>
-              </table>
-              <!-- End Table with stripped rows -->
-
-            </div>
-
-        </div>
-      </div>
-    </section>
+      </section>
 
       </div>
     </section>

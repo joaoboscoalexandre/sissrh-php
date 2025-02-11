@@ -11,6 +11,7 @@ $(function(){
     $('[name=ramal]').mask('9999-9999');
     $('[name=celular]').mask('(99)99999-9999');
     $('[name=tel_fixo2]').mask('(99) 9999-9999');
+    $('[name=tel_celular]').mask('(99) 99999-9999');
     $('[name=tel_celular2]').mask('(99) 99999-9999');
     $('[name=coord_N]').mask('9.999.999');
     $('[name=coord_E]').mask('999.999');

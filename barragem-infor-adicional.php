@@ -208,8 +208,8 @@
   
     <br/><br/>
     <center><img src="assets/img/Logotipo_SRH.png" alt=""></center><br/>
-    <center><h5 class="card-title">Formulário para Cadastro de Informações Adicionais da Barragem<br/>
-    <?php echo $barragem['nome_barragem']; ?> </h5></center><br/>
+    <center><h5 class="card-title">Formulário para Cadastro de Informações Adicionais<br/><strong>
+    <?php echo $barragem['nome_barragem']; ?></strong></h5></center><br/>
     <?php
 
     if(isset($_POST['acao']) && $_POST['acao'] == "cadastrar"){
@@ -764,18 +764,16 @@
                                 </div>
 
                                 <!--Dados Adicionais-->
-                                <div class="alert alert-primary alert-dismissible fade show">
-                                    V. DADOS ADICIONAIS
-                                </div>
+                                <div class="alert alert-primary alert-dismissible fade show"><strong>V. DADOS ADICIONAIS</strong></div>
 
-                                <div class="col-md-9">
+                                <div class="col-md-8">
                                     <div class="form-floating">
                                         <textarea name="comentarios" class="form-control" style="height: 100px;"></textarea>
                                         <label for="comentario">Comentários/Observações:</label>
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-floating">
                                         <input type="text" name="oficio" class="form-control" value="">
                                         <label>Ofício:</label>
@@ -783,7 +781,7 @@
                                 </div>
 
                                 <div class="text-center mt-4">
-                                <button type="submit" name="acao" value="cadastrar" class="btn btn-primary">Cadastrar Informação Adicional</button>
+                                <button type="submit" name="acao" value="cadastrar" class="btn btn-primary">Cadastrar Informações Adicionais</button>
                                     </button>
                                 </div>
                              

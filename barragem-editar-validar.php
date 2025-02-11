@@ -91,13 +91,13 @@
         </a>
         <ul id="tables-barragem" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="barragem-administrar.php" >
+            <a href="barragem-administrar.php"  class="active">
               <i class="bi bi-circle"></i><span>Administrar Barragens</span>
             </a>
             
           </li>
           <li>
-            <a href="barragem-cadastrar.php" class="active">
+            <a href="barragem-cadastrar.php">
               <i class="bi bi-circle"></i><span>Cadastrar Barragens</span>
             </a>
           </li>
@@ -190,11 +190,19 @@
 
           <div class="card">
             <div class="card-body">
+            <?php
+                if (isset($_GET['codBarragem'])) {
+                    $codBarragem = $_GET['codBarragem'];
+                    $barragem = PgSql::conectar()->prepare("SELECT nome_barragem FROM sissrh.tbbarragem_cadastro WHERE cod_barragem = ?");
+                    $barragem->execute(array($codBarragem));
+                    $barragem = $barragem->fetch();
+                }
+            ?>
               <br/><br/>
               <center><img src="assets/img/Logotipo_SRH.png" alt=""></center>
-              <center><h5 class="card-title">Formulário de Cadastro para Barragem de Acumulação de Água<br/>
-              Lei Federal nº 12.334/2010 e Portaria nº 2.747/2017 - SRH/CE</h5></center>
-              <br/><br/>
+              <center><h5 class="card-title">Formulário de Atualização de Informações de Acumulação de Água<br/><strong>
+              <?php echo $barragem['nome_barragem']; ?></strong></h5></center><br/>
+            
               <?php 
               if(isset($_POST['acao'])){
 
@@ -251,9 +259,7 @@
               $barragem = $barragem->fetch();
               ?>
 
-              <div class="alert alert-primary alert-dismissible fade show" >
-                I. IDENTIFICAÇÃO DO EMPREENDEDOR
-              </div>
+              <div class="alert alert-primary alert-dismissible fade show"><strong>I. IDENTIFICAÇÃO DO EMPREENDEDOR</strong></div>
               <!-- Floating Labels Form -->
               <form method="post" class="row g-3">
                 <div class="col-md-6">
@@ -326,8 +332,7 @@
                   </div>
                 </div>
 
-                <div class="alert alert-secondary alert-dismissible fade show">
-                Tem mais de 01 (um) empreendedor?&nbsp;&nbsp; <input class="form-check-input" type="radio" name="checkBoxSubordinados" id="possui" value="yes">&nbsp;&nbsp;Sim&nbsp;&nbsp;&nbsp;
+                <div class="alert alert-secondary alert-dismissible fade show">Tem mais de 01 (um) empreendedor?&nbsp;&nbsp; <input class="form-check-input" type="radio" name="checkBoxSubordinados" id="possui" value="yes">&nbsp;&nbsp;Sim&nbsp;&nbsp;&nbsp;
                 <input class="form-check-input" type="radio" name="checkBoxSubordinados" id="naoPossui" value="no" checked>&nbsp;&nbsp;Não
                 </div>
 
@@ -394,9 +399,7 @@
                 </div>
 
                 <br/><br/><br/>
-                <div class="alert alert-primary alert-dismissible fade show" >
-                II. IDENTIFICAÇÃO DA BARRAGEM
-                </div>
+                <div class="alert alert-primary alert-dismissible fade show" ><strong>II. IDENTIFICAÇÃO DA BARRAGEM</strong></div>
                 <div class="col-md-7">
                   <div class="form-floating">
                     <input type="text" class="form-control" name="nomeBarragem" placeholder="Nome da Barragem" value="<?php echo $barragem['nome_barragem']; ?>">
@@ -432,9 +435,7 @@
                 </div>
 
                 <br/><br/><br/>
-                <div class="alert alert-primary alert-dismissible fade show" >
-                III. USOS DA BARRAGEM
-                </div>
+                <div class="alert alert-primary alert-dismissible fade show" ><strong>III. USOS DA BARRAGEM</strong></div>
                 <div class="col-md-12">
                   <div class="form-floating">
                   <input type="text" class="form-control" name="usoBarragem" value="<?php echo $barragem['finalidade_barragem']; ?>">
@@ -443,14 +444,12 @@
                 </div>
 
                 <br/><br/><br/>
-                <div class="alert alert-primary alert-dismissible fade show" >
-                IV. IDENTIFICAÇÃO DA BARRAGEM PRINCIPAL
-                </div>
+                <div class="alert alert-primary alert-dismissible fade show" ><strong>IV. IDENTIFICAÇÃO DA BARRAGEM PRINCIPAL</strong></div>
                 <div class="alert alert-secondary alert-dismissible fade show">
                 Tem informações das características técnicas da barragem?&nbsp;&nbsp; <input class="form-check-input" type="radio" name="gridRadio" id="gridRadios" value="option">&nbsp;&nbsp;Sim&nbsp;&nbsp;&nbsp;
                 <input class="form-check-input" type="radio" name="gridRadio" id="gridRadios" value="option" checked>&nbsp;&nbsp;Não
                 </div>
-                <div class="alert alert-secondary alert-dismissible fade show"><center>TIPO DE BARRAGEM PRINCIPAL</center></div>
+                <div class="alert alert-secondary alert-dismissible fade show"><center><strong>TIPO DE BARRAGEM PRINCIPAL</strong></center></div>
                 <div class="col-md-12">
                   <div class="form-floating">
                   <input type="text" class="form-control" name="tipoBarragem" value="<?php echo $barragem['tipo_barragem']; ?>">
@@ -458,7 +457,7 @@
                   </div>
                 </div>
 
-                <div class="alert alert-secondary alert-dismissible fade show"><center>BARRAGEM PRINCIPAL</center></div>
+                <div class="alert alert-secondary alert-dismissible fade show"><center><strong>BARRAGEM PRINCIPAL</strong></center></div>
                 <div class="col-md-3">
                   <div class="form-floating">
                     <input type="text" class="form-control" name="alturaMacico" placeholder="Altura do Maciço (m)" value="<?php echo $barragem['altura_macico']; ?>">
@@ -485,7 +484,7 @@
                 </div>
 
                 <br/><br/><br/>
-                <div class="alert alert-primary alert-dismissible fade show"><center>ESTRUTURA EXTRAVASSORA PRINCIPAL (SANGRADOURO)</center></div>
+                <div class="alert alert-primary alert-dismissible fade show"><center><strong>ESTRUTURA EXTRAVASSORA PRINCIPAL (SANGRADOURO)</strong></center></div>
                 <div class="alert alert-secondary alert-dismissible fade show">
                 Tem vertedouro/Sangradouro?&nbsp;&nbsp; <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1">&nbsp;&nbsp;Sim&nbsp;&nbsp;&nbsp;
                 <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2" checked>&nbsp;&nbsp;Não

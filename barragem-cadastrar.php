@@ -261,11 +261,11 @@
                 $mail->SMTPAuth = true;
                 $mail->Username = 'cadastrobarragem@jbwebdesigner.com.br';
                 $mail->Password = 'srhBarragem@2024!$';
-                $mail->setFrom('cadastrobarragem@jbwebdesigner.com.br', 'Cadastro de Barragem');
-                $mail->addAddress('joao.bosco@srh.ce.gov.br', 'Brenda Carneiro');
-                $mail->Subject = 'Nova Barragem Cadastrada no site da SRH';
+                $mail->setFrom('cadastrobarragem@jbwebdesigner.com.br', 'Cadastro de Barragem no site da SRH');
+                $mail->addAddress('amanda.farias@srh.ce.gov.br', 'Brenda Carneiro');
+                $mail->Subject = 'Nova Barragem cadastrada no site da SRH';
                 $mail->msgHTML(file_get_contents('message.html'), __DIR__);
-                $mail->Body = 'Olá Brenda Carneiro, uma nova barragem foi cadastrada no site da SRH.<br/><br/> Atenciosamente!';
+                $mail->Body = 'Olá Brenda Carneiro, Uma nova barragem foi cadastrada com sucesso! Clique <a href="http://intranet.srh.ce.gov.br/externos/sissrh_v1/" target="_blank">aqui</a> para conferir detalhes e informações importantes..';
                 //$mail->addAttachment('test.txt');
                 if($mail->send()){
                   Painel::alert('sucesso','Sua barragem foi cadastrada com sucesso na Secretaria dos Recursos Hídricos - SRH.<br/> Para maiores informações ligar para o Setor de Segurança de Barragens (85) 3492-9233.'); 
@@ -309,21 +309,19 @@
                 */
 
               ?>
-              <div class="alert alert-primary alert-dismissible fade show" >
-                I. IDENTIFICAÇÃO DO EMPREENDEDOR
-              </div>
+              <div class="alert alert-primary alert-dismissible fade show"><strong>I. IDENTIFICAÇÃO DO EMPREENDEDOR</strong></div>
               <!-- Floating Labels Form -->
               <form method="post" class="row g-3">
                 <div class="col-md-6">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="nomeEmpreendedor" placeholder="Nome Completo" >
+                    <input type="text" class="form-control" name="nomeEmpreendedor" placeholder="Nome Completo" required>
                     <label for="floatingName">Nome Completo</label>
                   </div>
                 </div>
 
                 <div class="col-md-2">
-                <select name="empreendedor1" class="form-select" >
-                  <option value="" selected disabled>Selecione o tipo</option>
+                <select name="empreendedor1" class="form-select" required>
+                  <option value="" selected disabled >Selecione Físico ou Jurídico</option>
                   <option value="fisico">Fisico</option>
                   <option value="juridico">Jurídico</option>
                 </select>
@@ -345,7 +343,7 @@
 
                 <div class="col-md-8">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="endereco" placeholder="Endereço Completo" >
+                    <input type="text" class="form-control" name="endereco" placeholder="Endereço Completo"  required>
                     <label for="floatingName">Endereço Completo</label>
                   </div>
                 </div>
@@ -357,7 +355,7 @@
                 </div>
                 <div class="col-md-3">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="tel_celular" placeholder="Telefone Celular" >
+                    <input type="text" class="form-control" name="tel_celular" placeholder="Telefone Celular" required>
                     <label for="floatingName">Telefone Celular</label>
                   </div>
                 </div>
@@ -376,8 +374,9 @@
                 </div>
 
                 <div class="alert alert-secondary alert-dismissible fade show">
-                Tem mais de 01 (um) empreendedor?&nbsp;&nbsp; <input class="form-check-input" type="radio" name="checkBoxSubordinados" id="possui" value="yes">&nbsp;&nbsp;Sim&nbsp;&nbsp;&nbsp;
-                <input class="form-check-input" type="radio" name="checkBoxSubordinados" id="naoPossui" value="no" checked>&nbsp;&nbsp;Não
+                Tem mais de 01 (um) empreendedor?&nbsp;&nbsp; 
+                <input class="form-check-input" type="radio" name="gridRadio" id="gridRadios" value="sim">&nbsp;Sim&nbsp;&nbsp;
+                <input class="form-check-input" type="radio" name="gridRadio" id="gridRadios" value="não" checked>&nbsp;&nbsp;Não, caso afirmativo preecher as informações abaixo.
                 </div>
 
                 <div class="col-md-6">
@@ -434,9 +433,7 @@
                 </div>
 
                 <br/><br/><br/>
-                <div class="alert alert-primary alert-dismissible fade show" >
-                II. IDENTIFICAÇÃO DA BARRAGEM
-                </div>
+                <div class="alert alert-primary alert-dismissible fade show"><strong>II. IDENTIFICAÇÃO DA BARRAGEM</strong></div>
                 <div class="col-md-7">
                   <div class="form-floating">
                     <input type="text" class="form-control" name="nomeBarragem" placeholder="Nome da Barragem" >
@@ -482,42 +479,38 @@
                 </div>
 
                 <br/><br/><br/>
-                <div class="alert alert-primary alert-dismissible fade show" >
-                III. USOS DA BARRAGEM
-                </div>
+                <div class="alert alert-primary alert-dismissible fade show"><strong>III. USOS DA BARRAGEM</strong></div>
                 <div class="col-md-12">
                   <div class="form-floating">
-                  <input class="form-check-input" type="checkbox" name="usoBarragem[]" value="Abastecimento Humano" checked />&nbsp;Abastecimento Humano&nbsp;&nbsp;
+                  <input class="form-check-input" type="checkbox" name="usoBarragem[]" value="Abastecimento Humano" />&nbsp;Abastecimento Humano&nbsp;&nbsp;
                   <input class="form-check-input" type="checkbox" name="usoBarragem[]" value="Dessendentação Animal" />&nbsp;Dessendentação Animal&nbsp;&nbsp;
                   <input class="form-check-input" type="checkbox" name="usoBarragem[]" value="Abastecimento Industrial" />&nbsp;Abastecimento Industrial&nbsp;&nbsp;
                   <input class="form-check-input" type="checkbox" name="usoBarragem[]" value="Irrigação" />&nbsp;Irrigação&nbsp;&nbsp;
                   <input class="form-check-input" type="checkbox" name="usoBarragem[]" value="Regularização de Vazões" />&nbsp;Regularização de Vazões&nbsp;&nbsp;
                   <input class="form-check-input" type="checkbox" name="usoBarragem[]" value="Piscicultura" />&nbsp;Piscicultura&nbsp;&nbsp;
                   <input class="form-check-input" type="checkbox" name="usoBarragem[]" value="Controle de Cheias" />&nbsp;Controle de Cheias&nbsp;&nbsp;
-                  <input class="form-check-input" type="checkbox" name="usoBarragem[]" value="Recreação" />&nbsp;Recreação&nbsp;&nbsp;
-                  <input class="form-check-input" type="checkbox" name="usoBarragem[]" value="Outros Usos" />&nbsp;Outros Usos
+                  <input class="form-check-input" type="checkbox" name="usoBarragem[]" value="Recreação" />&nbsp;Recreação&nbsp;&nbsp;</br>
+                  <input class="form-check-input" type="checkbox" name="usoBarragem[]" value="Outros Usos" />&nbsp;Outros Usos:&nbsp;&nbsp; <input type="text" class="form-control" name="usoBarragem[]" maxlength="50" />
                   </div>
                 </div>
 
                 <br/><br/><br/>
-                <div class="alert alert-primary alert-dismissible fade show" >
-                IV. IDENTIFICAÇÃO DA BARRAGEM PRINCIPAL
-                </div>
+                <div class="alert alert-primary alert-dismissible fade show"><strong>IV. IDENTIFICAÇÃO DA BARRAGEM PRINCIPAL</strong></div>
                 <div class="alert alert-secondary alert-dismissible fade show">
                 Tem informações das características técnicas da barragem?&nbsp;&nbsp; <input class="form-check-input" type="radio" name="gridRadio" id="gridRadios" value="option">&nbsp;&nbsp;Sim&nbsp;&nbsp;&nbsp;
-                <input class="form-check-input" type="radio" name="gridRadio" id="gridRadios" value="option" checked>&nbsp;&nbsp;Não
+                <input class="form-check-input" type="radio" name="gridRadio" id="gridRadios" value="option" checked>&nbsp;&nbsp;Não, caso afirmativo preecher as informações abaixo.
                 </div>
-                <div class="alert alert-secondary alert-dismissible fade show"><center>TIPO DE BARRAGEM PRINCIPAL</center></div>
+                <div class="alert alert-secondary alert-dismissible fade show"><center><strong>TIPO DE BARRAGEM PRINCIPAL</strong></center></div>
                 <div class="col-md-12">
                   <div class="form-floating">
                   <input class="form-check-input" type="radio" name="tipoBarragem" value="Concreto">&nbsp;&nbsp;Concreto&nbsp;&nbsp;&nbsp;
-                  <input class="form-check-input" type="radio" name="tipoBarragem" value="Terra" checked>&nbsp;&nbsp;Terra&nbsp;&nbsp;&nbsp;
+                  <input class="form-check-input" type="radio" name="tipoBarragem" value="Terra">&nbsp;&nbsp;Terra&nbsp;&nbsp;&nbsp;
                   <input class="form-check-input" type="radio" name="tipoBarragem" value="Enrocamento">&nbsp;&nbsp;Enrocamento&nbsp;&nbsp;&nbsp;
                   <input class="form-check-input" type="radio" name="tipoBarragem" value="Alvenaria de Argamassa">&nbsp;&nbsp;Alvenaria de Argamassa&nbsp;&nbsp;&nbsp;
                   </div>
                 </div>
 
-                <div class="alert alert-secondary alert-dismissible fade show"><center>BARRAGEM PRINCIPAL</center></div>
+                <div class="alert alert-secondary alert-dismissible fade show"><center><strong>BARRAGEM PRINCIPAL</strong></center></div>
                 <div class="col-md-3">
                   <div class="form-floating">
                     <input type="text" class="form-control" name="alturaMacico" placeholder="Altura do Maciço (m)">
@@ -544,14 +537,14 @@
                 </div>
 
                 <br/><br/><br/>
-                <div class="alert alert-primary alert-dismissible fade show"><center>ESTRUTURA EXTRAVASSORA PRINCIPAL (SANGRADOURO)</center></div>
+                <div class="alert alert-primary alert-dismissible fade show"><center><strong>ESTRUTURA EXTRAVASSORA PRINCIPAL (SANGRADOURO)</strong></center></div>
                 <div class="alert alert-secondary alert-dismissible fade show">
                 Tem vertedouro/Sangradouro?&nbsp;&nbsp; <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1">&nbsp;&nbsp;Sim&nbsp;&nbsp;&nbsp;
                 <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2" checked>&nbsp;&nbsp;Não
                 </div>
                 <div class="col-md-12">
                   <div class="form-floating">
-                  <input class="form-check-input" type="radio" name="tipoVertedouro" value="Canal Escavado" checked>&nbsp;&nbsp;Canal Escavado&nbsp;&nbsp;&nbsp;
+                  <input class="form-check-input" type="radio" name="tipoVertedouro" value="Canal Escavado">&nbsp;&nbsp;Canal Escavado&nbsp;&nbsp;&nbsp;
                   <input class="form-check-input" type="radio" name="tipoVertedouro" value="Com Comportas">&nbsp;&nbsp;Com Comportas&nbsp;&nbsp;&nbsp;
                   <input class="form-check-input" type="radio" name="tipoVertedouro" value="Perfil Creager">&nbsp;&nbsp;Perfil Creager&nbsp;&nbsp;&nbsp;
                   <input class="form-check-input" type="radio" name="tipoVertedouro" value="OutroTipoVertedouro">&nbsp;&nbsp;Outro&nbsp;&nbsp;&nbsp;
