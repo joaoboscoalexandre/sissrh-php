@@ -78,7 +78,7 @@
                         a fim de garantir os padrões de segurança de barragens e o seu universo de controle pelo poder público, com base na fiscalização, 
                         orientação e correções das ações de segurança, a Secretaria dos Recursos Hídricos do Estado do Ceará, neste ato, identifica o Sr(a). 
                         <?php echo '<strong>' . $barragem['empreendedor'] . '</strong>'; ?>, CPF/CNPJ: <?php echo "<strong>" . $barragem['cpf_cnpj'] . "</strong>"; ?>, 
-                        como empreendedor da <?php echo "<strong>" . $barragem['nome_barragem'] . "</strong>"; ?>, 
+                        como empreendedor da Barragem: <?php echo "<strong>" . $barragem['nome_barragem'] . "</strong>"; ?>, 
                         no município de <?php echo "<strong>" . $barragem['municipio'] . "</strong>"; ?>, cujas coordenadas são UTM: <?php echo "<strong>" . $barragem['coordenadan'] . "</strong>"; ?> e <?php echo "<strong>" . $barragem['coordenadae'] . "</strong>"; ?> S Zona 24 M, uma vez que compete a 
                         esta Secretaria a identificação dos empreendedores, de acordo com o artigo 16, inciso I da referida lei.</td>
                     </tr>

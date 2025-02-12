@@ -200,8 +200,8 @@
             ?>
               <br/><br/>
               <center><img src="assets/img/Logotipo_SRH.png" alt=""></center>
-              <center><h5 class="card-title">Formulário de Atualização de Informações de Acumulação de Água<br/><strong>
-              <?php echo $barragem['nome_barragem']; ?></strong></h5></center><br/>
+              <center><h5 class="card-title">Formulário de Atualização de Informações de Acumulação de Água<br/>
+              <strong>Barragem:&nbsp;<?php echo $barragem['nome_barragem']; ?></strong></h5></center><br/>
             
               <?php 
               if(isset($_POST['acao'])){
@@ -332,8 +332,9 @@
                   </div>
                 </div>
 
-                <div class="alert alert-secondary alert-dismissible fade show">Tem mais de 01 (um) empreendedor?&nbsp;&nbsp; <input class="form-check-input" type="radio" name="checkBoxSubordinados" id="possui" value="yes">&nbsp;&nbsp;Sim&nbsp;&nbsp;&nbsp;
-                <input class="form-check-input" type="radio" name="checkBoxSubordinados" id="naoPossui" value="no" checked>&nbsp;&nbsp;Não
+                <div class="alert alert-secondary alert-dismissible fade show">Tem mais de 01 (um) empreendedor?&nbsp;&nbsp; 
+                  <input class="form-check-input" type="radio" name="checkBoxSubordinados" id="possui" value="yes" <?php if($barragem['empreendedor2'] && $barragem['cpf_cnpj2'] != "") { echo 'checked';} ?> >&nbsp;Sim&nbsp;&nbsp;&nbsp;
+                  <input class="form-check-input" type="radio" name="checkBoxSubordinados" id="naoPossui" value="no" <?php if($barragem['empreendedor2'] && $barragem['cpf_cnpj2'] == "") { echo 'checked';} ?>>&nbsp;Não
                 </div>
 
                 <div class="col-md-6">

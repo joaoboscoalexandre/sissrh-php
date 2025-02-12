@@ -91,13 +91,13 @@
         </a>
         <ul id="tables-barragem" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="barragem-administrar.php" >
+            <a href="barragem-administrar.php" class="active">
               <i class="bi bi-circle"></i><span>Administrar Barragens</span>
             </a>
             
           </li>
           <li>
-            <a href="barragem-cadastrar.php" class="active">
+            <a href="barragem-cadastrar.php">
               <i class="bi bi-circle"></i><span>Cadastrar Barragens</span>
             </a>
           </li>
@@ -207,9 +207,9 @@
   ?>
   
     <br/><br/>
-    <center><img src="assets/img/Logotipo_SRH.png" alt=""></center><br/>
-    <center><h5 class="card-title">Formulário para Cadastro de Informações Adicionais<br/><strong>
-    <?php echo $barragem['nome_barragem']; ?></strong></h5></center><br/>
+    <center><img src="assets/img/Logotipo_SRH.png" alt=""></center>
+    <center><h5 class="card-title">Formulário para Cadastro de Informações Adicionais<br/> <i class="bi bi-water"></i>
+    <strong>Barragem:&nbsp;<?php echo $barragem['nome_barragem']; ?></strong></h5></center><br/>
     <?php
 
     if(isset($_POST['acao']) && $_POST['acao'] == "cadastrar"){

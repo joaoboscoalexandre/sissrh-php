@@ -63,11 +63,11 @@ include('config.php');
                   if(isset($_POST['acao'])){
                     $ds_cpf = $_POST['cpf'];
                     $ds_cpf = str_replace(array('.','-'),"",$ds_cpf);
-                    echo $dt_data_nascimento = $_POST['dataNascimento'];
+                    $dt_data_nascimento = $_POST['dataNascimento'];
 
-                    $sql = PgSql::conectar()->prepare("SELECT ds_cpf FROM rh.tbsirh_servidor WHERE ds_cpf = ? AND dt_data_nascimento = ?");
+                    $sql = PgSql::conectar()->prepare("SELECT cpf FROM sissrh.tbrh_funcionario WHERE cpf = ? AND data_nascimento = ?");
                     $sql->execute(array($ds_cpf,$dt_data_nascimento));
-                    $ds_cpf = $sql->fetch()['ds_cpf'];
+                    $ds_cpf = $sql->fetch()['cpf'];
 
                     if($sql->rowCount() == 1){
                       $_SESSION['cpf'] = $ds_cpf;

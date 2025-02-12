@@ -199,9 +199,9 @@
             <div class="card-body">
               <br/><br/>
               <center><img src="assets/img/Logotipo_SRH.png" alt=""></center>
-              <center><h5 class="card-title">Formulário de Cadastro para Barragem de Acumulação de Água<br/>
+              <center><h5 class="card-title"><strong>Formulário de Cadastro para Barragem de Acumulação de Água</strong><br/>
               Lei Federal nº 12.334/2010 e Portaria nº 2.747/2017 - SRH/CE</h5></center>
-              <br/><br/>
+              <br/>
               <?php 
               if(isset($_POST['acao'])){
 
@@ -262,17 +262,18 @@
                 $mail->Username = 'cadastrobarragem@jbwebdesigner.com.br';
                 $mail->Password = 'srhBarragem@2024!$';
                 $mail->setFrom('cadastrobarragem@jbwebdesigner.com.br', 'Cadastro de Barragem no site da SRH');
-                $mail->addAddress('amanda.farias@srh.ce.gov.br', 'Brenda Carneiro');
+                $mail->addAddress('brenda.carneiro@srh.ce.gov.br', 'Brenda Carneiro');
+                $mail->addAddress('joao.bosco@srh.ce.gov.br', 'João Bosco Alexandre');
+                $mail->addAddress('amanda.farias@srh.ce.gov.br', 'Amanda Farias');
                 $mail->Subject = 'Nova Barragem cadastrada no site da SRH';
                 $mail->msgHTML(file_get_contents('message.html'), __DIR__);
-                $mail->Body = 'Olá Brenda Carneiro, Uma nova barragem foi cadastrada com sucesso! Clique <a href="http://intranet.srh.ce.gov.br/externos/sissrh_v1/" target="_blank">aqui</a> para conferir detalhes e informações importantes..';
+                $mail->Body = 'Olá Brenda Carneiro! Uma nova barragem foi cadastrada com sucesso! Clique <a href="http://intranet.srh.ce.gov.br/externos/sissrh_v1/" target="_blank">aqui</a> para conferir detalhes e informações importantes..';
                 //$mail->addAttachment('test.txt');
                 if($mail->send()){
                   Painel::alert('sucesso','Sua barragem foi cadastrada com sucesso na Secretaria dos Recursos Hídricos - SRH.<br/> Para maiores informações ligar para o Setor de Segurança de Barragens (85) 3492-9233.'); 
                 } 
 
               } 
-
 
                 /*
                 echo "I. IDENTIFICAÇÃO DO EMPREENDEDOR<br/>";

@@ -302,7 +302,15 @@ include('permissoes.php');
               <div class="card info-card revenue-card">
 
                 <div class="card-body">
-                  <h5 class="card-title">Segurança de Barragens</h5>
+                  <h5 class="card-title">Secretário assinante do RIE</h5>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-clipboard-check"></i>
+                    </div>
+                    <div class="ps-3">
+                    <a href="#" class="btn btn-outline-success">Editar Assinante do RIE</a> 
+                    </div>
+                  </div>
                 </div>
 
               </div>
@@ -350,8 +358,8 @@ include('permissoes.php');
                       <td><?php echo $value['empreendedor']; ?></td>
                       <td><?php echo $value['cpf_cnpj']; ?></td>
                       <td><?php echo $value['numero_registro']; ?></td>
-                      <td><center><a href="<?php echo INCLUDE_PATH ?>barragem-editar-validar.php?codBarragem=<?php echo $value['cod_barragem']; ?>"><i class="bi bi-pencil-square"></i></a>&nbsp;<a href="<?php echo INCLUDE_PATH ?>barragem-infor-adicional.php?codBarragem=<?php echo $value['cod_barragem']; ?>"><i class="bi bi-clipboard-plus"></i></a>&nbsp;
-                      <a href="#" onclick="parent.location.href ='<?php echo INCLUDE_PATH; ?>relatorios/registro-identificacao-empreendedor.php?codBarragem=<?php echo $value['cod_barragem']; ?>'" ><i class="bi bi-file-earmark-pdf"></i></a></center></td>
+                      <td><center><a href="<?php echo INCLUDE_PATH ?>barragem-editar-validar.php?codBarragem=<?php echo $value['cod_barragem']; ?>"><i class="bi bi-pencil-square"></i></a>&nbsp;<a href="<?php echo INCLUDE_PATH ?>barragem-infor-adicional.php?codBarragem=<?php echo $value['cod_barragem']; ?>"><i class="bi bi-clipboard-plus"></i></a>
+                      <a href="#" onclick="parent.location.href ='<?php echo INCLUDE_PATH; ?>relatorios/registro-identificacao-empreendedor.php?codBarragem=<?php echo $value['cod_barragem']; ?>'" ><i class="bi bi-file-earmark-pdf"></i></a>&nbsp;<i class="bi bi-trash"></i></center></td>
                     </tr>
                     <?php
                       }

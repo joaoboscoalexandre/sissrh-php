@@ -58,12 +58,12 @@ $cpf = $_SESSION['cpf'];
 
                 if(isset($_SESSION['cpf']) && !isset($_POST['acao'])){             
 
-                  $sql = PgSql::conectar()->prepare("SELECT * FROM rh.tbsirh_servidor WHERE ds_cpf = ?");
+                  $sql = PgSql::conectar()->prepare("SELECT * FROM sissrh.tbrh_funcionario WHERE cpf = ?");
                   $sql->execute(array($cpf));
                   $dados = $sql->fetchAll();
                     foreach($dados as $key => $value){
-                      $ds_login = $value['ds_login'];
-                      $ds_senha = $value['ds_senha'];
+                      $ds_login = $value['login'];
+                      $ds_senha = $value['senha'];
                     }
                     echo '<div class="pt-4 pb-2">
                             <p class="text-center small"><b>Olá '.$ds_login.'</b><br/><b>Sua senha atual é</b>: '.$ds_senha.'<br/> 
@@ -80,7 +80,7 @@ $cpf = $_SESSION['cpf'];
                       if($senha === $confirmeNovaSenha){
 
                         //echo 'update no banco nova senha: '.$confirmeNovaSenha. 'no cpf '.$_SESSION[cpf];
-                        $sql = PgSql::conectar()->exec("UPDATE rh.tbsirh_servidor SET ds_senha = '".$senha."' WHERE ds_cpf = '".$cpf."' ");
+                        $sql = PgSql::conectar()->exec("UPDATE sissrh.tbrh_funcionario SET senha = '".$senha."' WHERE cpf = '".$cpf."' ");
                         Painel::alert('sucesso','Senha alterada com sucesso, clique abaixo no Voltar para a Página de Login para entrar no sistema.');
                       } else {
                         Painel::alert('erro','Os campos Nova Senha e Confirme sua nova Senha precisam ser idênticos!');

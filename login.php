@@ -11,8 +11,8 @@ if(isset($_COOKIE['lembrar'])){
     $_SESSION['login'] = true;
     $_SESSION['cpf'] = $cpf;
     $_SESSION['senha'] = $senha;
-    $_SESSION['ds_login'] = $info['ds_login'];
-    $_SESSION['nome'] = $info['nm_nome'];
+    $_SESSION['login'] = $info['login'];
+    $_SESSION['nome'] = $info['nome'];
     $_SESSION['codPerfil'] = $info['cod_perfil'];
     Painel::redirect(INCLUDE_PATH);
   } 
@@ -101,6 +101,7 @@ if(isset($_COOKIE['lembrar'])){
                           setcookie('senha',$senha,time()+(60*60*24));
                       } 
                         Painel::redirect(INCLUDE_PATH);
+                        exit;
                       } else {
                         //Falho no Login
                         Painel::alert('erro','CPF ou Senha incorretos!');
