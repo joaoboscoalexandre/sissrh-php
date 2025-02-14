@@ -11,7 +11,7 @@ include('classes/'.$class.'.php');
 
 spl_autoload_register($autoload);
 
-define('INCLUDE_PATH','http://localhost/sissrh/');
+define('INCLUDE_PATH','http://intranet.srh.ce.gov.br/externos/sissrh/');
 define('BASE_DIR_PAINEL',__DIR__.'/painel/');
 
 //Conectar com o banco de dados
