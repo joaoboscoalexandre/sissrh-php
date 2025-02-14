@@ -3,7 +3,7 @@
 if(isset($_COOKIE['lembrar'])){
   $cpf = $_COOKIE['cpf'];
   $senha = $_COOKIE['senha'];
-  $sql = PgSql::conectar()->prepare("SELECT * FROM sissrh.tbrh_funcionario WHERE ds_cpf = ? AND ds_senha = ?");
+  $sql = PgSql::conectar()->prepare("SELECT * FROM sissrh.tbrh_funcionario WHERE cpf = ? AND senha = ?");
   $sql->execute(array($cpf,$senha));
 
   if($sql->rowCount() == 1){

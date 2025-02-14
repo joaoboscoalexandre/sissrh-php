@@ -60,12 +60,12 @@
 		public static function alert($tipo,$mensagem){
 			if($tipo == 'sucesso'){
 				echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                <nav class="d-flex justify-content-center">'.$mensagem.'</nav>
+                <nav class="d-flex justify-content-center"><strong>'.$mensagem.'</strong></nav>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               	</div>';
 			} elseif ($tipo == 'erro'){
 				echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <nav class="d-flex justify-content-center">'.$mensagem.'</nav>
+                <nav class="d-flex justify-content-center"><strong>'.$mensagem.'</strong></nav>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               	</div>';
 			}

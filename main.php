@@ -114,15 +114,17 @@
         </a>
         <ul id="tables-desapropriacao" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="desapropriacao-cadastro-agrovila.php">
-              <i class="bi bi-circle"></i><span>Cadastrar Agrovila</span>
+            <a href="desapropriacao-cadastro-obra.php">
+              <i class="bi bi-circle"></i><span>Cadastrar Obra</span>
             </a>
           </li>
           <li>
-            <a href="desapropriacao-cadastro-familias.php">
-              <i class="bi bi-circle"></i><span>Cadastrar Famílias</span>
-            </a>
-          </li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>Cadastrar Famílias</span></a>
+            <ul>
+              <li><a href="desapropriacao-cadastro-familia.php"> <i class="bi bi-circle"></i><span>Vila Graça</a></li>
+            </ul>
+            </li>
         </ul>
       </li><!-- End Tables Nav -->
       <?php } ?>
