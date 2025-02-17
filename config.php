@@ -12,7 +12,7 @@ include('classes/'.$class.'.php');
 spl_autoload_register($autoload);
 
 define('INCLUDE_PATH','http://localhost/sissrh/');
-define('BASE_DIR_PAINEL',__DIR__.'/painel/');
+//define('BASE_DIR_PAINEL',__DIR__.'/painel/');
 
 //Conectar com o banco de dados
 define('HOST','172.31.131.10');

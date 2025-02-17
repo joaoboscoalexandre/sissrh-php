@@ -112,13 +112,28 @@
         </a>
         <ul id="tables-desapropriacao" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>Cadastro de Famílias</span></a>
+            <ul>
+              <?php
+              $obra = PgSql::conectar()->prepare("SELECT * FROM sissrh.tbdesapropriacao_agrovila ORDER BY cod_agrovila ASC ");
+              $obra->execute();
+              $obra = $obra->fetchAll();
+              foreach($obra as $key => $value){
+              ?>
+              <li>
+                <a href="desapropriacao-cadastro-familia.php?codAgrovila=<?php echo $value['cod_agrovila']; ?>">
+                <i class="bi bi-circle"></i><span><?php echo $value['nome_agrovila']; ?>
+                </a>
+              </li>
+              <?php
+              }
+              ?>
+            </ul>
+            </li>
+            <li>
             <a href="desapropriacao-cadastro-agrovila.php">
               <i class="bi bi-circle"></i><span>Cadastrar Agrovila</span>
-            </a>
-          </li>
-          <li>
-            <a href="desapropriacao-cadastro-familias.php">
-              <i class="bi bi-circle"></i><span>Cadastrar Famílias</span>
             </a>
           </li>
         </ul>
@@ -262,7 +277,7 @@
                 $mail->Username = 'cadastrobarragem@jbwebdesigner.com.br';
                 $mail->Password = 'srhBarragem@2024!$';
                 $mail->setFrom('cadastrobarragem@jbwebdesigner.com.br', 'Cadastro de Barragem no site da SRH');
-                $mail->addAddress('brenda.carneiro@srh.ce.gov.br', 'Brenda Carneiro');
+                //$mail->addAddress('brenda.carneiro@srh.ce.gov.br', 'Brenda Carneiro');
                 $mail->addAddress('joao.bosco@srh.ce.gov.br', 'João Bosco Alexandre');
                 $mail->addAddress('amanda.farias@srh.ce.gov.br', 'Amanda Farias');
                 $mail->Subject = 'Nova Barragem cadastrada no site da SRH';
@@ -272,7 +287,6 @@
                 if($mail->send()){
                   Painel::alert('sucesso','Sua barragem foi cadastrada com sucesso na Secretaria dos Recursos Hídricos - SRH.<br/> Para maiores informações ligar para o Setor de Segurança de Barragens (85) 3492-9233.'); 
                 } 
-
               } 
 
                 /*

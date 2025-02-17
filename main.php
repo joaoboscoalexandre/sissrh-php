@@ -114,17 +114,30 @@
         </a>
         <ul id="tables-desapropriacao" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="desapropriacao-cadastro-obra.php">
-              <i class="bi bi-circle"></i><span>Cadastrar Obra</span>
-            </a>
-          </li>
-          <li>
             <a href="#">
-              <i class="bi bi-circle"></i><span>Cadastrar Famílias</span></a>
+              <i class="bi bi-circle"></i><span>Cadastro de Famílias</span></a>
             <ul>
-              <li><a href="desapropriacao-cadastro-familia.php"> <i class="bi bi-circle"></i><span>Vila Graça</a></li>
+              <?php
+              $obra = PgSql::conectar()->prepare("SELECT * FROM sissrh.tbdesapropriacao_agrovila ORDER BY cod_agrovila ASC ");
+              $obra->execute();
+              $obra = $obra->fetchAll();
+              foreach($obra as $key => $value){
+              ?>
+              <li>
+                <a href="desapropriacao-cadastro-familia.php?codAgrovila=<?php echo $value['cod_agrovila']; ?>">
+                <i class="bi bi-circle"></i><span><?php echo $value['nome_agrovila']; ?>
+                </a>
+              </li>
+              <?php
+              }
+              ?>
             </ul>
             </li>
+            <li>
+            <a href="desapropriacao-cadastro-agrovila.php">
+              <i class="bi bi-circle"></i><span>Cadastrar Agrovila</span>
+            </a>
+          </li>
         </ul>
       </li><!-- End Tables Nav -->
       <?php } ?>
