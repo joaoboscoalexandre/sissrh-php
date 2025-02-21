@@ -341,6 +341,7 @@ include('permissoes.php');
                     <tr>
                     <th scope="col">Nome da Barragem</th>
                     <th scope="col">Nome do Proprietário</th>
+                    <th scope="col">Municipio</th>
                     <th scope="col">CPF | CNPJ</th>
                     <th scope="col">Nº Reg.</th>
                     <th scope="col"><center>Ações</center></th>
@@ -356,6 +357,7 @@ include('permissoes.php');
                     <tr>
                       <td><?php echo $value['nome_barragem']; ?></td>
                       <td><?php echo $value['empreendedor']; ?></td>
+                      <td><?php echo $value['municipio']; ?></td>
                       <td><?php echo $value['cpf_cnpj']; ?></td>
                       <td><?php echo $value['numero_registro']; ?></td>
                       <td><center><a href="<?php echo INCLUDE_PATH ?>barragem-editar-validar.php?codBarragem=<?php echo $value['cod_barragem']; ?>"><i class="bi bi-pencil-square"></i></a>&nbsp;<a href="<?php echo INCLUDE_PATH ?>barragem-infor-adicional.php?codBarragem=<?php echo $value['cod_barragem']; ?>"><i class="bi bi-clipboard-plus"></i></a>
@@ -369,11 +371,9 @@ include('permissoes.php');
                 <!-- End Table with stripped rows -->
               </div>
             </div>
-
           </div>
         </div>
       </section>
-
       </div>
     </section>
 
