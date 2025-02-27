@@ -223,98 +223,112 @@ foreach($agrovila as $key => $value){
               <?php echo '<strong>'. $nomeAgrovila .' no Município de '. $nomeMunicipio .'</strong>'; ?></h5></center>
               <br/>
               <?php 
-              if(isset($_POST['acao'])){
+              if(isset($_POST['acao']) && $_POST['acao'] == "cadastrar"){
 
-                $nm_nome = $_POST['nomeEmpreendedor'];
-                if($_POST['empreendedor1'] == 'fisico'){
-                  $ds_cpf_cnpj = $_POST['cpf1'];                  
-                } else {
-                  $ds_cpf_cnpj = $_POST['cnpj1'];                  
-                }
-                $ds_endereco = $_POST['endereco'];
-                $ds_email = $_POST['email'];
-                $ds_telefone = $_POST['tel_fixo'];
-                $ds_celular = $_POST['tel_celular'];
-                $ds_total_barragem = $_POST['qtd_bar'];
-                $nm_nome2 = $_POST['nomeEmpreendedor2'];
-                if($_POST['empreendedor2'] == 'fisico'){
-                  $ds_cpf_cnpj2 = $_POST['cpf2'];                  
-                } else {
-                  $ds_cpf_cnpj2 = $_POST['cnpj2'];                  
-                }
-                $ds_endereco2 = $_POST['endereco2'];
-                $ds_email2 = $_POST['email2'];
-                $ds_telefone2 = $_POST['tel_fixo2'];
-                $ds_celular2 = $_POST['tel_celular2'];
-                $nm_nome_barragem = $_POST['nomeBarragem'];
-                $ds_denominacao_barragem = $_POST['denominacaoBarragem'];
-
-                $cd_municipio = $_POST['municipiobarragem'];
-                $nome_municipio = PgSql::conectar()->prepare("SELECT ds_municipio FROM sicbar.tbsicbar_municipio WHERE cd_municipio = ? ");
-                $nome_municipio->execute(array($cd_municipio));
-                $nome_municipio = $nome_municipio->fetch()['ds_municipio'];
-
-                $nr_coordenadan = $_POST['coord_N'];
-                $nr_coordenadae = $_POST['coord_E'];
-                $ds_finalidade_barragem = $_POST['usoBarragem'];
-                $ds_finalidade_barragem = implode(", ",$ds_finalidade_barragem);
-
-                $ds_tipo_barragem = $_POST['tipoBarragem'];
-                $ds_altura_macico = $_POST['alturaMacico'];
-                $ds_largura_coroamento = $_POST['larguraCoroamento'];
-                $ds_extensao_coroamento = $_POST['extencaoCoroamento'];
-                $ds_tipo_vertedouro = $_POST['tipoVertedouro'];
-                $ds_capacidade_reservatorio = $_POST['capacidadeReservatorio'];
-                $dt_preenchimento = date('Y-m-d');       
+                $codAgrovila = $_GET['codAgrovila'];
+                $nomeTitular = $_POST['nome_titular'];
+                $cpfTitular = $_POST['cpf_titular'];
+                $rgTitular = $_POST['rg_titular'];
+                $nomePai = $_POST['nome_pai'];
+                $nomeMae = $_POST['nome_mae'];
+                $sexo = $_POST['sexo'];
+                $dataNasc = date('Y-m-d', strtotime($_POST['data_nascimento']));
+                $naturalidade = $_POST['naturalidade'];
+                $uf = $_POST['uf'];
+                $apelido = $_POST['apelido'];
+                $estadoCivil = $_POST['estado_civil'];
+                $telefoneEmail = $_POST['telefone_email'];
                 
-                $query = PgSql::conectar()->prepare("INSERT INTO sissrh.tbbarragem_cadastro (empreendedor, cpf_cnpj, endereco, email, telefone, celular, total_barragem, empreendedor2, cpf_cnpj2, 
-                endereco2, email2, telefone2, celular2, nome_barragem, denominacao_barragem, municipio, coordenadan, coordenadae, finalidade_barragem, tipo_barragem, altura_macico, 
-                largura_coroamento, extensao_coroamento, tipo_vertedouro, capacidade_reservatorio, data_cadastro) 
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                $query->execute(array($nm_nome, $ds_cpf_cnpj, $ds_endereco, $ds_email, $ds_telefone, $ds_celular, $ds_total_barragem, $nm_nome2, $ds_cpf_cnpj2, $ds_endereco2, $ds_email2, $ds_telefone2, $ds_celular2, $nm_nome_barragem, $ds_denominacao_barragem, $nome_municipio, $nr_coordenadan, $nr_coordenadae, $ds_finalidade_barragem, $ds_tipo_barragem, $ds_altura_macico, $ds_largura_coroamento, $ds_extensao_coroamento, $ds_tipo_vertedouro, $ds_capacidade_reservatorio, $dt_preenchimento));
-                
-                $mail = new PHPMailer;
-                $mail->isSMTP();
-                $mail->SMTPDebug = 0;
-                $mail->Host = 'smtp.hostinger.com';
-                $mail->Port = 587;
-                $mail->SMTPAuth = true;
-                $mail->Username = 'cadastrobarragem@jbwebdesigner.com.br';
-                $mail->Password = 'srhBarragem@2024!$';
-                $mail->setFrom('cadastrobarragem@jbwebdesigner.com.br', 'Cadastro de Barragem');
-                $mail->addAddress('joao.bosco@srh.ce.gov.br', 'Brenda Carneiro');
-                $mail->Subject = 'Nova Barragem Cadastrada no site da SRH';
-                $mail->msgHTML(file_get_contents('message.html'), __DIR__);
-                $mail->Body = 'Olá Brenda Carneiro, uma nova barragem foi cadastrada no site da SRH.<br/><br/> Atenciosamente!';
-                //$mail->addAttachment('test.txt');
-                if($mail->send()){
-                  Painel::alert('sucesso','Sua barragem foi cadastrada com sucesso na Secretaria dos Recursos Hídricos - SRH.<br/> Para maiores informações ligar para o Setor de Segurança de Barragens (85) 3492-9233.'); 
-                } 
+                $escolaridade = $_POST['escolaridade'];
+                $carteiraAssinada = $_POST['carteira_assinada'];
+                $atividadeDesenv = $_POST['atividade_desenvolvida'];
+                $atividadeDesenv = implode(", ",$atividadeDesenv);
+                $aposentado = $_POST['aposentado'];
+                $cultivaArea = $_POST['cultiva_area'];
+                $areaCultivada = $_POST['area_cultivada'];
+                $dapCafAtivo = $_POST['dap_caf_ativo'];
+                $ocupanteCargoPublico = $_POST['ocupante_cargo_publico'];
+                $compativelExploracao = $_POST['compativel_exploracao'];
+                $rendaFamiliar = $_POST['renda_familiar'];
+                $source = array('.', ',');  
+                $replace = array('', '.');  
+                $rendaFamiliar = str_replace($source, $replace, $rendaFamiliar); //remove os pontos e substitui a virgula pelo ponto  
 
+                $assistenciaGoverno = $_POST['assistencia_governo'];
+                $orgaoEntidade = $_POST['orgao_entidade'];
+                $frequenciaAssistencia = $_POST['frequencia_assistencia'];
+                $modoAssistencia = $_POST['modo_assistencia'];
+                
+                /*
+                echo $participacaoSocial = $_POST['participacao_social']."<br/>";
+                echo $servicoComunitario = $_POST['servico_comunitario']."<br/>";
+                echo $qualServicoComunitario = $_POST['qual_comunitario']."<br/>";
+                echo $reformaAgraria = $_POST['reforma_agraria']."<br/>";
+                echo $qualReforma = $_POST['programa_reforma']."<br/>";
+                echo '================================================='."<br/>";
+                echo $tempoResideVila = $_POST['tempo_reside_vila']."<br/>";
+                echo $ondeReside = $_POST['nao_reside_vila_onde_reside']."<br/>";
+                echo $tipoExploracao = $_POST['tipo_exploracao']."<br/>";
+                echo $imovelForaArea = $_POST['imovel_fora_area']."<br/>";
+                echo $membrosFamilia = $_POST['membros_familia']."<br/>";
+                echo $mudouEndereco = $_POST['mudou_endereco']."<br/>";
+                echo $mudouPorque = $_POST['mudou_porque']."<br/>";
+                echo $vendeuTrocou = $_POST['vendeu_trocou']."<br/>";
+                echo $mudouEndereco = $_POST['vendeu_trocou_porque']."<br/>";
+                echo $sustentaFamilia = $_POST['propriedade_sustenta_familia']."<br/>";
+                echo '================================================='."<br/>";
+                echo $nrPessoaImovel = $_POST['nr_pessoas_imovel']."<br/>";
+                echo $ate12 = $_POST['ate_12']."<br/>";
+                echo $entre13_18 = $_POST['entre_13_18']."<br/>";
+                echo $entre19_40 = $_POST['entre_19_40']."<br/>";
+                echo $entre41_59 = $_POST['entre_41_59']."<br/>";
+                echo $entre_60_65 = $_POST['entre_60_65']."<br/>";
+                echo $entre_66_80 = $_POST['entre_66_80']."<br/>";
+                echo $mais_80 = $_POST['mais_80']."<br/>";
+                echo $nrFilhoImovel = $_POST['nr_filho_imovel']."<br/>";
+                echo $nrMulheresImovel = $_POST['nr_mulheres_imovel']."<br/>";
+                echo $pessoasDeficiencia = $_POST['pessoas_deficiencia']."<br/>";
+                echo '================================================='."<br/>";
+                echo $veracidadeInformacoes = $_POST['veracidade_informacoes']."<br/>";
+                echo $enderecoResidencia = $_POST['endereco_residencia']."<br/>";
+                echo $cadastradoPor = $_POST['cadastrado_por']."<br/>";
+                echo $cpfCadastrador = $_POST['cpf_cadastrador']."<br/>";
+                echo $orgaoCadastrador = $_POST['orgao_cadastrador']."<br/>";
+                echo $localPreenchimento = $_POST['local_preenchimento']."<br/>";
+                echo $dataCadastro = date('Y-m-d')."<br/>";
+                echo $arquivoPdf = $_FILES['formularioPdf'];
+                echo $nomeArquivoPdf = $_FILES['formularioPdf']['name'];
+                */
+
+                $sql = PgSql::conectar()->prepare("INSERT INTO sissrh.tbdesapropriacao_cadastro_familia(cod_agrovila,nome_titular,cpf_titular,rg_titular,nome_pai,nome_mae,sexo,data_nascimento,naturalidade,uf,apelido,estado_civil,telefone,escolaridade,carteira_assinada,atividade_desenvolvida,aposentado,cultiva_area,area_cultivada,dap_caf_ativo,ocupante_cargo_publico,compativel_exploracao,renda_familiar,assistencia_governo,orgao_entidade,frequencia_assistencia,modo_assistencia)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                $sql->execute(array($codAgrovila,$nomeTitular,$cpfTitular,$rgTitular,$nomePai,$nomeMae,$sexo,$dataNasc,$naturalidade,$uf,$apelido,$estadoCivil,$telefoneEmail,$escolaridade,$carteiraAssinada,$atividadeDesenv,$aposentado,$cultivaArea,$areaCultivada,$dapCafAtivo,$ocupanteCargoPublico,$compativelExploracao,$rendaFamiliar,$assistenciaGoverno,$orgaoEntidade,$frequenciaAssistencia,$modoAssistencia));
+                Painel::alert('sucesso', 'Família cadastrada com sucesso!');
               } 
 
               ?>
               <div class="alert alert-primary alert-dismissible fade show" ><strong>1. IDENTIFICAÇÃO</strong></div>
               <!-- Floating Labels Form -->
-              <form method="post" class="row g-3">
+              <form method="post" class="row g-3" enctype="multipart/form-data">
+
                 <div class="col-md-8">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="nomeEmpreendedor" placeholder="Nome Completo" >
+                    <input type="text" class="form-control" name="nome_titular" placeholder="Nome Completo do Titular" required>
                     <label for="floatingName">Nome Completo do Titular</label>
                   </div>
                 </div>
                
                 <div class="col-md-2">
                   <div class="form-floating">
-                    <input type="text" name="cpf" class="form-control" placeholder="CPF" >
-                    <label for="floatingCPFCNPJ">CPF</label>
+                    <input type="text" name="cpf_titular" class="form-control" placeholder="CPF do Titular" required>
+                    <label for="floatingCPFCNPJ">CPF do Titular</label>
                   </div>
                 </div>
 
                 <div class="col-md-2">
                   <div class="form-floating">
-                    <input type="text" name="rg" class="form-control" placeholder="rg" >
-                    <label for="floatingCPFCNPJ">RG - Órgão Emissor</label>
+                    <input type="text" name="rg_titular" class="form-control" placeholder="RG com Órgão Emissor" >
+                    <label for="floatingCPFCNPJ">RG com Órgão Emissor</label>
                   </div>
                 </div>
 
@@ -326,14 +340,14 @@ foreach($agrovila as $key => $value){
                 </div>
                 <div class="col-md-4">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="nome_mae" placeholder="Nome do Mãe">
-                    <label for="floatingEmail">Nome do Mãe</label>
+                    <input type="text" class="form-control" name="nome_mae" placeholder="Nome da Mãe">
+                    <label for="floatingEmail">Nome da Mãe</label>
                   </div>
                 </div>
                 <div class="col-md-2">
                   <div class="form-floating">
-                  <select class="form-select" id="floatingSelect" aria-label="sexo" name="sexo" >
-                      <option selected disabled>Selecione</option>
+                  <select class="form-select" id="floatingSelect" aria-label="sexo" name="sexo" required>
+                      <option value="" selected disabled>Selecione</option>
                       <option value ="Masculino">Masculino</option>
                       <option value ="Feminino">Feminino</option>
                     </select>
@@ -342,27 +356,27 @@ foreach($agrovila as $key => $value){
                 </div>
                 <div class="col-md-2">
                   <div class="form-floating">
-                    <input type="date" class="form-control" name="data_nascimento" >
+                    <input type="date" class="form-control" name="data_nascimento" required>
                     <label for="floatingName">Data de Nascimento</label>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="naturalidade" >
+                    <input type="text" class="form-control" name="naturalidade" required>
                     <label for="floatingName">Naturalidade</label>
                   </div>
                 </div>
                 <div class="col-md-2">
                   <div class="form-floating">
-                  <select class="form-select" id="floatingSelect" aria-label="Municipio" name="uf" >
-                      <option selected disabled>Selecione a UF</option>
+                  <select class="form-select" id="floatingSelect" aria-label="Municipio" name="uf" required>
+                      <option value="" selected disabled>Selecione a UF</option>
                       <?php
                         $uf = PgSql::conectar()->prepare("SELECT * FROM sissrh.tbadmin_estados ORDER BY nome_estado ASC");
                         $uf->execute();
                         $uf = $uf->fetchAll();
                         foreach($uf as $key => $value){
                         ?>
-                        <option value ="<?php echo $value['cod_estado']; ?>"><?php echo $value['sigla_estado']; ?></option>;
+                        <option value ="<?php echo $value['sigla_estado']; ?>"><?php echo $value['sigla_estado']; ?></option>;
                       <?php } ?>
                     </select>
                     <label for="floatingSelect">UF</label>
@@ -376,8 +390,8 @@ foreach($agrovila as $key => $value){
                 </div>
                 <div class="col-md-3">
                   <div class="form-floating">
-                  <select class="form-select" id="floatingSelect" aria-label="estado_civil" name="estado_civil" >
-                      <option selected disabled>Selecione</option>
+                  <select class="form-select" id="floatingSelect" aria-label="estado_civil" name="estado_civil" required>
+                      <option value ="" selected disabled>Selecione</option>
                       <option value ="Solteiro">Solteiro</option>
                       <option value ="Casado">Casado</option>
                       <option value ="Viúvo">Viúvo</option>
@@ -389,8 +403,8 @@ foreach($agrovila as $key => $value){
                 </div>
                 <div class="col-md-2">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="telefone_email" >
-                    <label for="floatingName">Telefone e E-mail</label>
+                    <input type="text" class="form-control" name="telefone_email" required>
+                    <label for="floatingName">Telefone e/ou E-mail</label>
                   </div>
                 </div>
 
@@ -398,7 +412,7 @@ foreach($agrovila as $key => $value){
                 <div class="col-md-3">
                   <div class="form-floating">
                   <select class="form-select" id="floatingSelect" aria-label="escolaridade" name="escolaridade" >
-                      <option selected disabled>Selecione</option>
+                      <option value ="" selected disabled>Selecione</option>
                       <option value ="Não Alfabetizado">Não Alfabetizado</option>
                       <option value ="Alfabetizado">Alfabetizado</option>
                       <option value ="Ensino Fundamental Incompleto">Ensino Fundamental Incompleto</option>
@@ -413,6 +427,16 @@ foreach($agrovila as $key => $value){
                     <label for="floatingSelect">Escolaridade</label>
                   </div>
                 </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="carteira_assinada" name="carteira_assinada" >
+                      <option value ="" selected disabled>Selecione</option>
+                      <option value ="True">Sim</option>
+                      <option value ="False">Não</option>
+                    </select>
+                    <label for="floatingSelect">Possuir carteira assinada?</label>
+                  </div>
+                </div>
                 <div class="col-md-7">
                   <label for="floatingSelect">Qual a atividade desenvolvida?</label>
                   <div class="form-floating">
@@ -422,16 +446,6 @@ foreach($agrovila as $key => $value){
                   <input class="form-check-input" type="checkbox" name="atividade_desenvolvida[]" value="Comércio" />&nbsp;Comércio&nbsp;&nbsp;
                   <input class="form-check-input" type="checkbox" name="atividade_desenvolvida[]" value="Pesca" />&nbsp;Pesca&nbsp;&nbsp;
                   <input class="form-check-input" type="checkbox" name="atividade_desenvolvida[]" value="Outros" />&nbsp;Outros&nbsp;&nbsp;
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-floating">
-                  <select class="form-select" id="floatingSelect" aria-label="carteira_assinada" name="carteira_assinada" >
-                      <option selected disabled>Selecione</option>
-                      <option value ="True">Sim</option>
-                      <option value ="False">Não</option>
-                    </select>
-                    <label for="floatingSelect">Possuir carteira assinada?</label>
                   </div>
                 </div>
                 <div class="col-md-2">
@@ -470,51 +484,31 @@ foreach($agrovila as $key => $value){
                     <label for="floatingSelect">Possuir DAP ou CAF  ativa</label>
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                   <div class="form-floating">
-                  <select class="form-select" id="floatingSelect" aria-label="dap_caf_ativo" name="dap_caf_ativo" >
+                  <select class="form-select" id="floatingSelect" aria-label="ocupante_cargo_publico" name="ocupante_cargo_publico" >
                       <option selected disabled>Selecione</option>
                       <option value ="True">Sim</option>
                       <option value ="False">Não</option>
                     </select>
-                    <label for="floatingSelect">Ocupante de cargo público?</label>
+                    <label for="floatingSelect">Ocupante de cargo público ou função pública remunerada?</label>
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-6">
                   <div class="form-floating">
-                  <select class="form-select" id="floatingSelect" aria-label="dap_caf_ativo" name="dap_caf_ativo" >
+                  <select class="form-select" id="floatingSelect" aria-label="compativel_exploracao" name="compativel_exploracao" >
                       <option selected disabled>Selecione</option>
                       <option value ="True">Sim</option>
                       <option value ="False">Não</option>
                     </select>
-                    <label for="floatingSelect">Ocupante de cargo público?</label>
+                    <label for="floatingSelect">Caso afirmativo, é compatível com a exploração da parcela pelo indivíduo ou pelo núcleo familiar?</label>
                   </div>
-                </div>
+                </div>               
                 <div class="col-md-2">
                   <div class="form-floating">
                     <input type="text" class="form-control" name="renda_familiar" placeholder="Renda Familiar</label>
                   </div>" >
                     <label for="floatingName">Renda Familiar R$</label>
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-floating">
-                  <select class="form-select" id="floatingSelect" aria-label="dap_caf_ativo" name="dap_caf_ativo" >
-                      <option selected disabled>Selecione</option>
-                      <option value ="True">Sim</option>
-                      <option value ="False">Não</option>
-                    </select>
-                    <label for="floatingSelect">Ocupante de cargo público?</label>
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-floating">
-                  <select class="form-select" id="floatingSelect" aria-label="dap_caf_ativo" name="dap_caf_ativo" >
-                      <option selected disabled>Selecione</option>
-                      <option value ="True">Sim</option>
-                      <option value ="False">Não</option>
-                    </select>
-                    <label for="floatingSelect">Caso afirmativo, o exercício do cargo, do emprego ou da função pública é compatível com a exploração da parcela pelo indivíduo ou pelo núcleo familiar?</label>
                   </div>
                 </div>
 
@@ -529,7 +523,7 @@ foreach($agrovila as $key => $value){
                     <label for="floatingSelect">Recebe assistência técnica de alguma entidade do governo?</label>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-floating">
                     <input type="text" class="form-control" name="orgao_entidade" >
                     <label for="floating">Caso afirmativo, qual órgão/entidade?</label>
@@ -543,14 +537,14 @@ foreach($agrovila as $key => $value){
                 </div>
                 <div class="col-md-4">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="orgao_entidade">
+                    <input type="text" class="form-control" name="modo_assistencia">
                     <label for="floating">De que modo é realizada a assistência técnica?</label>
                   </div>
                 </div>
                   
 
                 <div class="alert alert-primary alert-dismissible fade show" ><strong>5. REPRESENTAÇÃO SOCIAL</strong></div>
-                <div class="col-md-7">
+                <div class="col-md-6">
                   <label for="floatingSelect">Participação Social</label>
                   <div class="form-floating">
                   <input class="form-check-input" type="checkbox" name="participacao_social[]" value="Associações Comunitárias" />&nbsp;Associações Comunitárias&nbsp;&nbsp;
@@ -560,35 +554,35 @@ foreach($agrovila as $key => $value){
                   <input class="form-check-input" type="checkbox" name="participacao_social[]" value="Outros" />&nbsp;Outros&nbsp;&nbsp;
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-6">
                   <div class="form-floating">
                   <select class="form-select" id="floatingSelect" aria-label="servico_comunitario" name="servico_comunitario" >
                       <option selected disabled>Selecione</option>
                       <option value ="True">Sim</option>
                       <option value ="False">Não</option>
                     </select>
-                    <label for="floatingSelect">Presta serviços de interesse comunitário à comunidade rural ou à vizinhança da área objeto do projeto de Reassentamento?</label>
+                    <label for="floatingSelect">Presta serviços de interesse comunitário à comunidade rural na área objeto do projeto de Reassentamento?</label>
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                   <div class="form-floating">
                     <input type="text" class="form-control" name="qual_comunitario">
                     <label for="floatingCPFCNPJ">Caso afirmativo, qual?</label>
                   </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-6">
                   <div class="form-floating">
                   <select class="form-select" id="floatingSelect" aria-label="reforma_agraria" name="reforma_agraria" >
                       <option selected disabled>Selecione</option>
                       <option value ="True">Sim</option>
                       <option value ="False">Não</option>
                     </select>
-                    <label for="floatingSelect">Participa ou participou de algum programa de reforma agrária, de regularização fundiária ou de crédito fundiário?</label>
+                    <label for="floatingSelect">Participa ou participou de algum programa de reforma agrária, regularização fundiária ou de crédito fundiário?</label>
                   </div>
                 </div>
                 
-                <div class="col-md-2">
+                <div class="col-md-3">
                   <div class="form-floating">
                     <input type="text" class="form-control" name="programa_reforma">
                     <label for="floatingCPFCNPJ">Caso afirmativo, qual?</label>
@@ -599,15 +593,15 @@ foreach($agrovila as $key => $value){
                 
                 <div class="col-md-2">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="tempo_reside">
+                    <input type="text" class="form-control" name="tempo_reside_vila">
                     <label for="floatingCPFCNPJ">Reside na Vila há quanto tempo?</label>
                   </div>
                 </div>
                 
                 <div class="col-md-3">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="onde_reside">
-                    <label for="floatingCPFCNPJ">Não Reside na Vila Graça Onde reside?</label>
+                    <input type="text" class="form-control" name="nao_reside_vila_onde_reside">
+                    <label for="floatingCPFCNPJ">Não Reside na Vila? Onde reside?</label>
                   </div>
                 </div>
 
@@ -618,9 +612,9 @@ foreach($agrovila as $key => $value){
                   </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                   <div class="form-floating">
-                  <select class="form-select" id="floatingSelect" aria-label="reforma_agraria" name="reforma_agraria" >
+                  <select class="form-select" id="floatingSelect" aria-label="imovel_fora_area" name="imovel_fora_area" >
                       <option selected disabled>Selecione</option>
                       <option value ="True">Sim</option>
                       <option value ="False">Não</option>
@@ -628,15 +622,16 @@ foreach($agrovila as $key => $value){
                     <label for="floatingSelect">Possui algum imóvel rural fora da área do imóvel em questão?</label>
                   </div>
                 </div>
-                <div class="col-md-3">
+
+                <div class="col-md-4">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="tipo_exploracao">
-                    <label for="floatingCPFCNPJ">Entre Pais/Filho(a)s/Irmão(ã)s, quantos membros de sua família ocupam terras na Agrovila?</label>
+                    <input type="text" class="form-control" name="membros_familia">
+                    <label for="floatingCPFCNPJ">Quantos membros de sua família ocupam terras na Agrovila?</label>
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                   <div class="form-floating">
-                  <select class="form-select" id="floatingSelect" aria-label="reforma_agraria" name="reforma_agraria" >
+                  <select class="form-select" id="floatingSelect" aria-label="mudou_endereco " name="mudou_endereco" >
                       <option selected disabled>Selecione</option>
                       <option value ="True">Sim</option>
                       <option value ="False">Não</option>
@@ -644,15 +639,15 @@ foreach($agrovila as $key => $value){
                     <label for="floatingSelect">Já mudou de endereço nas terras da Agrovila?</label>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-5">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="tipo_exploracao">
+                    <input type="text" class="form-control" name="mudou_porque">
                     <label for="floatingCPFCNPJ">Caso afirmativo, porque?</label>
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                   <div class="form-floating">
-                  <select class="form-select" id="floatingSelect" aria-label="reforma_agraria" name="reforma_agraria" >
+                  <select class="form-select" id="floatingSelect" aria-label="vendeu_trocou" name="vendeu_trocou" >
                       <option selected disabled>Selecione</option>
                       <option value ="True">Sim</option>
                       <option value ="False">Não</option>
@@ -660,15 +655,15 @@ foreach($agrovila as $key => $value){
                     <label for="floatingSelect">Já vendeu/trocou/negociou terras dentro da Agrovila?</label>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-5">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="tipo_exploracao">
+                    <input type="text" class="form-control" name="vendeu_trocou_porque">
                     <label for="floatingCPFCNPJ">Caso afirmativo, porque?</label>
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                   <div class="form-floating">
-                  <select class="form-select" id="floatingSelect" aria-label="reforma_agraria" name="reforma_agraria" >
+                  <select class="form-select" id="floatingSelect" aria-label="propriedade_sustenta_familia" name="propriedade_sustenta_familia" >
                       <option selected disabled>Selecione</option>
                       <option value ="True">Sim</option>
                       <option value ="False">Não</option>
@@ -679,27 +674,69 @@ foreach($agrovila as $key => $value){
 
                 <div class="alert alert-primary alert-dismissible fade show" ><strong>7. INFORMAÇÕES FAMILIARES</strong></div>
                 
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="alturaMacico" placeholder="Altura do Maciço (m)">
-                    <label for="floatingName">Nº de pessoas residentes no imóvel</label>
+                    <input type="text" class="form-control" name="nr_pessoas_imovel" placeholder="Nº de pessoas no imóvel">
+                    <label for="floatingName">Nº de pessoas no imóvel</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="ate_12" placeholder="até 12 anos">
+                    <label for="floatingName">até 12 anos</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="entre_13_18" placeholder="13 a 18 anos">
+                    <label for="floatingName">13 a 18 anos</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="entre_19_40" placeholder="19 a 40 anos">
+                    <label for="floatingName">19 a 40 anos</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="entre_41_59" placeholder="41 a 59 anos">
+                    <label for="floatingName">41 a 59 anos</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="entre_60_65" placeholder="60 a 65 anos">
+                    <label for="floatingName">60 a 65 anos</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="entre_66_80" placeholder="66 a 80 anos">
+                    <label for="floatingName">66 a 80 anos</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="mais_80" placeholder="mais de 80 anos">
+                    <label for="floatingName">mais de 80 anos</label>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="larguraCoroamento" placeholder="Largura do Coroamento (m)">
+                    <input type="text" class="form-control" name="nr_filho_imovel" placeholder="Nº de filhos residentes no imóvel">
                     <label for="floatingCPFCNPJ">Nº de filhos residentes no imóvel</label>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="extencaoCoroamento" placeholder="Extensão do Coroamento (m)">
-                    <label for="floatingName">Nº de filhos residentes no imóvel</label>
+                    <input type="text" class="form-control" name="nr_mulheres_imovel" placeholder="Nº de mulheres residentes no imóvel">
+                    <label for="floatingName">Nº de mulheres residentes no imóvel</label>
                   </div>
                 </div>
                 <div class="col-md-2">
                   <div class="form-floating">
-                  <select class="form-select" id="floatingSelect" aria-label="reforma_agraria" name="reforma_agraria" >
+                  <select class="form-select" id="floatingSelect" aria-label="pessoas_deficiencia" name="pessoas_deficiencia" >
                       <option selected disabled>Selecione</option>
                       <option value ="True">Sim</option>
                       <option value ="False">Não</option>
@@ -712,20 +749,52 @@ foreach($agrovila as $key => $value){
                 <p>De acordo com art. 299 do Código Penal Brasileiro: é crime omitir, em documento público ou particular, declaração que dele devia constar, ou nele inserir ou fazer inserir declaração falsa ou diversa da que devia ser escrita, com o fim de prejudicar direito, criar obrigação ou alterar a verdade sobre fato juridicamente relevante, sob pena de reclusão, de um a cinco anos, e multa, se o documento é público.</p>
                 <div class="col-md-12">
                   <div class="form-floating">
-                  <input class="form-check-input" type="checkbox" name="participacao_social[]" value="Associações Comunitárias" checked />&nbsp;&nbsp;DECLARO, para os devidos fins, que as informações prestadas neste formulário são verdadeiras e estar ciente e de acordo com todas as regras da SRH e do Código Penal Brasileiro.
+                  <input class="form-check-input" type="checkbox" name="veracidade_informacoes" value="Sim" checked />&nbsp;&nbsp;DECLARO, para os devidos fins, que as informações prestadas neste formulário são verdadeiras e estar ciente e de acordo com todas as regras da SRH e do Código Penal Brasileiro.
                   </div>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-4">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="extencaoCoroamento" placeholder="Extensão do Coroamento (m)">
+                    <input type="text" class="form-control" name="endereco_residencia" placeholder="Endereço da residência">
                     <label for="floatingName">Endereço da Residência</label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="cadastrado_por" placeholder="Cadastrado por">
+                    <label for="floatingName">Preenchido por</label>
                   </div>
                 </div>
 
                 <div class="col-md-2">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="extencaoCoroamento" placeholder="Extensão do Coroamento (m)">
+                    <input type="text" class="form-control" name="cpf_cadastrador" placeholder="CPF Cadastrador">
+                    <label for="floatingName">CPF do Cadastrador</label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="orgao_cadastrador" placeholder="Orgão do Cadastrador">
+                    <label for="floatingName">Órgão do Cadastrador</label>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="local_preenchimento" placeholder="Local do Preenchimento">
+                    <label for="floatingName">Local do Preenchimento</label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="data_cadastro" placeholder="Data do Cadastro" value="<?php echo date('d/m/Y');?>" disabled>
                     <label for="floatingName">Data Cadastro</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-floating">
+                  <input class="form-control" type="file" name="formularioPdf" accept=".pdf" >
+                    <label for="floatingName">Upload do Formulário de Cadastro</label>
                   </div>
                 </div>
 

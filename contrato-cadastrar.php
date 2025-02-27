@@ -233,7 +233,7 @@
                 $tipoContrato = $_POST['tipo_contrato'];
                 $contratante = $_POST['contratante'];
                 $contratado = $_POST['contratado'];
-                $dataAss = $_POST['data_assinatura'];
+                //$dataAss = $_POST['data_assinatura'];
                 $_POST['data_assinatura'] !== null ? $dataAssinatura = date('Y-m-d', strtotime($_POST['data_assinatura'])) : null ;
                 $_POST['data_inicio'] !== null ? $dataInicio = date('Y-m-d', strtotime($_POST['data_inicio'])) : null;
                 $_POST['data_termino_previsto'] !== null ? $dataTerminoPrevisto = date('Y-m-d', strtotime($_POST['data_termino_previsto'])) : null;
