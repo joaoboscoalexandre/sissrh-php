@@ -36,7 +36,7 @@
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-gear-wide-connected"></i><span>Sistemas</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
             <a href="admin-cadastrar-sistema.php">
               <i class="bi bi-circle"></i><span>Cadastrar Sistema</span>
@@ -51,7 +51,7 @@
         <a class="nav-link collapsed" data-bs-target="#tables-contrato" data-bs-toggle="collapse" href="#">
           <i class="bi bi-card-checklist"></i><span>Acomp. de Contratos</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="tables-contrato" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="tables-contrato" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
             <a href="contrato-administrar.php">
               <i class="bi bi-circle"></i><span>Acompanhar Contratos</span>
@@ -72,7 +72,7 @@
         <a class="nav-link collapsed" data-bs-target="#tables-biblioteca" data-bs-toggle="collapse" href="#">
           <i class="bi bi-book-half"></i><span>Biblioteca</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="tables-biblioteca" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="tables-biblioteca" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
             <a href="biblioteca-cadastrar-livro.php">
               <i class="bi bi-circle"></i><span>Cadastrar Livro</span>
@@ -92,7 +92,7 @@
         <a class="nav-link collapsed" data-bs-target="#tables-barragem" data-bs-toggle="collapse" href="#">
           <i class="bi bi-water"></i><span>Cadastro Barragens</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="tables-barragem" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="tables-barragem" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
             <a href="barragem-administrar.php">
               <i class="bi bi-circle"></i><span>Administrar Barragens</span>
@@ -112,7 +112,7 @@
         <a class="nav-link collapsed" data-bs-target="#tables-desapropriacao" data-bs-toggle="collapse" href="#">
           <i class="bi bi-house-fill"></i><span>Desapropriação</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="tables-desapropriacao" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="tables-desapropriacao" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
             <a href="#"><i class="bi bi-circle"></i><span>Cadastro de Famílias</span></a>
             <ul>
@@ -146,7 +146,7 @@
         <a class="nav-link collapsed" data-bs-target="#tables-rh" data-bs-toggle="collapse" href="#">
           <i class="bi bi-person-bounding-box"></i><span>Recursos Humanos</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="tables-rh" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="tables-rh" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
             <a href="rh-cadastrar-funcionario.php">
               <i class="bi bi-circle"></i><span>Cadastrar Funcionário</span>
@@ -171,7 +171,7 @@
         <a class="nav-link collapsed" data-bs-target="#tables-SiSMat" data-bs-toggle="collapse" href="#">
           <i class="bi bi-basket2"></i><span>Solicitação de Material</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="tables-SiSMat" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="tables-SiSMat" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
             <a href="rh-cadastrar-funcionario.php">
               <i class="bi bi-circle"></i><span>Pedidos</span>
@@ -224,6 +224,7 @@
       </li><!-- End Tables Nav -->
       <?php } ?>
 
+    
       <br/>
       <hr>
       <br/>

@@ -167,6 +167,64 @@ include('permissoes.php');
         </li><!-- End Tables Nav -->
       <?php } ?>
 
+      <?php if($sistema06 == true || $superAdmin == true){ ?>
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-SiSMat" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-basket2"></i><span>Solicitação de Material</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-SiSMat" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="rh-cadastrar-funcionario.php">
+              <i class="bi bi-circle"></i><span>Pedidos</span>
+            </a>
+            <ul>
+              <li>
+                <a href="material-administrar-pedidos.php"><i class="bi bi-circle"></i><span>Administrar Pedidos</span></a>
+              </li>
+              <li>
+                <a href="material-pedido-material.php"><i class="bi bi-circle"></i><span>Pedido de Material</span></a>
+              </li>
+              <li>
+                <a href="material-listar-pedidos.php"><i class="bi bi-circle"></i><span>Listar Pedidos</span></a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="rh-cadastrar-funcionario.php">
+              <i class="bi bi-circle"></i><span>Produtos</span>
+            </a>
+            <ul>
+              <li>
+                <a href="material-cadastrar-produto.php"><i class="bi bi-circle"></i><span>Cadastrar Produto</span></a>
+              </li>
+              <li>
+                <a href="material-listar-produtos.php"><i class="bi bi-circle"></i><span>Listar Produtos</span></a>
+              </li>
+              <li>
+                <a href="material-cadastrar-categoria.php"><i class="bi bi-circle"></i><span>Cadastrar Categoria</span></a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="rh-cadastrar-funcionario.php">
+              <i class="bi bi-circle"></i><span>Estoque</span>
+            </a>
+            <ul>
+              <li>
+                <a href="material-entrada-material.php"><i class="bi bi-circle"></i><span>Entrada de Material</span></a>
+              </li>
+              <li>
+                <a href="material-listar-estoque.php"><i class="bi bi-circle"></i><span>Listar Estoque</span></a>
+              </li>
+              <li>
+                <a href="material-listar-entrada-material.php"><i class="bi bi-circle"></i><span>Listar Entradas</span></a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+      <?php } ?>
+
       <br />
       <hr>
       <br />
@@ -218,7 +276,7 @@ include('permissoes.php');
               <h5 class="card-title">Formulário Para Cadastro de Sistemas</h5>
               <?php
 
-              if (isset($_POST['acao']) && $_POST['acao'] == 'Cadastrar') {
+              if (isset($_POST['acao']) && $_POST['acao'] == 'cadastrar') {
                 $nomeSistema = $_POST['nome_sistema'];
                 $siglaSistema = $_POST['sigla_sistema'];
                 $urlAcesso = $_POST['url_acesso'];
@@ -228,12 +286,11 @@ include('permissoes.php');
                 $dataCadastro = date('Y-m-d');
                 $flAtivo = $_POST['fl_ativo'];
                 $iconeSistema = $_POST['icone_sistema'];
-
-                //$sql = PgSql::conectar()->prepare("INSERT INTO sissrh.tbadmin_sistemas (nome_sistema, sigla_sistema, url_acesso, tipo_linguagem, nome_desenvolvedor, status_sistema, data_cadastro, icone_sistema) VALUES (?,?,?,?,?,?,?,?) ");
-                //$sql->execute(array($nomeSistema, $siglaSistema, $urlAcesso, $tipoLinguagem, $nomeDesenvolvedor, $statusSistema, $dataCadastro,$flAtivo,$iconeSistema));
+                  
                 $sql = PgSql::conectar()->prepare("INSERT INTO sissrh.tbadmin_sistemas (nome_sistema, sigla_sistema, url_acesso, tipo_linguagem, nome_desenvolvedor, status_sistema, data_cadastro, icone_sistema) VALUES (?,?,?,?,?,?,?,?) ");
                 $sql->execute(array($nomeSistema, $siglaSistema, $urlAcesso, $tipoLinguagem, $nomeDesenvolvedor, $statusSistema, $dataCadastro, $iconeSistema));
                 Painel::alert('sucesso', 'Sistema cadastrado com sucesso!');
+              
               }
 
               if (isset($_POST['acao']) && $_POST['acao'] == "editar") {
@@ -244,8 +301,8 @@ include('permissoes.php');
                 $tipoLinguagem = $_POST['tipo_linguagem'];
                 $nomeDesenvolvedor = $_POST['nome_desenvolvedor'];
                 $statusSistema = $_POST['status_sistema'];
-                $flAtivo = $_POST['fl_ativo'];  // "Ativo" ou "Inativo" enviado como 1 ou 0
                 $dataCadastro = date('Y-m-d');
+                $flAtivo = $_POST['fl_ativo'];
                 $iconeSistema = $_POST['icone_sistema'];
 
                 // Verifica se os valores de status e fl_ativo não estão vazios e converte para 1 ou 0
@@ -280,7 +337,7 @@ include('permissoes.php');
                 </div>
                 <div class="col-md-4">
                   <label for="inputState" class="form-label">Linguagem</label>
-                  <select name="tipo_linguagem" class="form-select" required>
+                  <select class="form-select" name="tipo_linguagem" required>
                     <option selected disabled value="">Escolha...</option>
                     <option value="BOOTSTRAP - JAVAWEB">BOOTSTRAP - JAVAWEB</option>
                     <option value="BOOTSTRAP - PHP - JAVA SCRIPT">BOOTSTRAP - PHP - JAVA SCRIPT</option>
@@ -291,15 +348,15 @@ include('permissoes.php');
                   <label for="inputState" class="form-label">Desenvolvedor</label>
                   <select class="form-select" name="nome_desenvolvedor" required>
                     <option selected disabled value="">Escolha...</option>
-                    <option>AMANDA FARIAS</option>
-                    <option>JOÃO BOSCO</option>
-                    <option>AMANDA FARIAS - JOÃO BOSCO</option>
+                    <option value="AMANDA FARIAS">AMANDA FARIAS</option>
+                    <option value="JOÃO BOSCO">JOÃO BOSCO</option>
+                    <option value="AMANDA FARIAS - JOÃO BOSCO">AMANDA FARIAS - JOÃO BOSCO</option>
                   </select>
                 </div>
 
                 <div class="col-md-3">
                   <label for="inputState" class="form-label">Situação</label>
-                  <select class="form-select" name="nome_desenvolvedor" required>
+                  <select class="form-select" name="status_sistema" required>
                     <option selected disabled value="">Escolha...</option>
                     <option value="Em Produção">Em Produção</option>
                     <option value="Em Desenvolvimento">Em Desenvolvimento</option>
@@ -309,10 +366,10 @@ include('permissoes.php');
 
                 <div class="col-md-3">
                   <label for="inputState" class="form-label">Status</label>
-                  <select class="form-select" name="nome_desenvolvedor" required>
+                  <select class="form-select" name="fl_ativo" required>
                     <option selected disabled value="">Escolha...</option>
-                    <option value="Ativo">Ativo</option>
-                    <option value="Inativo">Inativo</option>
+                    <option value="true">Ativo</option>
+                    <option value="false">Inativo</option>
                   </select>
                 </div>
 
@@ -322,7 +379,7 @@ include('permissoes.php');
                 </div><br />
 
                   <center>
-                    <button type="submit" name="acao" value="editar" class="btn btn-primary">Salvar Alterações</button>
+                    <button type="submit" name="acao" value="cadastrar" class="btn btn-primary">Cadastrar Sistema</button>
                   </center>
 
                 
