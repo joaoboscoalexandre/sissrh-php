@@ -1,10 +1,9 @@
 <?php
-
-include('config.php');
-
-if(isset($_GET['loggout']) || $_SESSION['cpf'] == '' || $_SESSION['login'] == 1){ Painel::loggout(); }
-
-include('permissoes.php');
+  include('config.php');
+  if(isset($_GET['loggout']) || $_SESSION['cpf'] == '' || $_SESSION['login'] == 1){ Painel::loggout(); }
+  include('permissoes.php');
+  use PHPMailer\PHPMailer\PHPMailer;
+  require 'vendor/autoload.php';
 
 ?>
 
@@ -34,7 +33,7 @@ include('permissoes.php');
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-gear-wide-connected"></i><span>Sistemas</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
             <a href="admin-cadastrar-sistema.php">
               <i class="bi bi-circle"></i><span>Cadastrar Sistema</span>
@@ -51,7 +50,7 @@ include('permissoes.php');
         </a>
         <ul id="tables-contrato" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="contrato-administrar.php" >
+            <a href="contrato-administrar.php">
               <i class="bi bi-circle"></i><span>Acompanhar Contratos</span>
             </a>
             
@@ -64,7 +63,7 @@ include('permissoes.php');
         </ul>
       </li><!-- End Tables Nav -->
       <?php } ?>
-      
+
       <?php if($sistema01 == true || $superAdmin == true){ ?>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-biblioteca" data-bs-toggle="collapse" href="#">
@@ -87,15 +86,14 @@ include('permissoes.php');
 
       <?php if($sistema02 == true || $superAdmin == true){ ?>
       <li class="nav-item">
-        <a class="nav-link " data-bs-target="#tables-barragem" data-bs-toggle="collapse" href="#">
+        <a class="nav-link collapsed" data-bs-target="#tables-barragem" data-bs-toggle="collapse" href="#">
           <i class="bi bi-water"></i><span>Cadastro Barragens</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="tables-barragem" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+        <ul id="tables-barragem" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="barragem-administrar.php" class="active">
+            <a href="barragem-administrar.php">
               <i class="bi bi-circle"></i><span>Administrar Barragens</span>
             </a>
-            
           </li>
           <li>
             <a href="barragem-cadastrar.php">
@@ -111,10 +109,9 @@ include('permissoes.php');
         <a class="nav-link collapsed" data-bs-target="#tables-desapropriacao" data-bs-toggle="collapse" href="#">
           <i class="bi bi-house-fill"></i><span>Desapropriação</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="tables-desapropriacao" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="tables-desapropriacao" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Cadastro de Famílias</span></a>
+            <a href="#"><i class="bi bi-circle"></i><span>Cadastro de Famílias</span></a>
             <ul>
               <?php
               $obra = PgSql::conectar()->prepare("SELECT * FROM sissrh.tbdesapropriacao_agrovila ORDER BY cod_agrovila ASC ");
@@ -124,7 +121,7 @@ include('permissoes.php');
               ?>
               <li>
                 <a href="desapropriacao-cadastro-familia.php?codAgrovila=<?php echo $value['cod_agrovila']; ?>">
-                <i class="bi bi-circle"></i><span><?php echo $value['nome_agrovila']; ?>
+                <i class="bi bi-circle"></i><span><?php echo $value['nome_agrovila']; ?></span>
                 </a>
               </li>
               <?php
@@ -146,7 +143,7 @@ include('permissoes.php');
         <a class="nav-link collapsed" data-bs-target="#tables-rh" data-bs-toggle="collapse" href="#">
           <i class="bi bi-person-bounding-box"></i><span>Recursos Humanos</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="tables-rh" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="tables-rh" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
             <a href="rh-cadastrar-funcionario.php">
               <i class="bi bi-circle"></i><span>Cadastrar Funcionário</span>
@@ -166,13 +163,12 @@ include('permissoes.php');
       </li><!-- End Tables Nav -->
       <?php } ?>
 
-      
       <?php if($sistema06 == true || $superAdmin == true){ ?>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-SiSMat" data-bs-toggle="collapse" href="#">
           <i class="bi bi-basket2"></i><span>Solicitação de Material</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="tables-SiSMat" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="tables-SiSMat" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
           <li>
             <a href="rh-cadastrar-funcionario.php">
               <i class="bi bi-circle"></i><span>Pedidos</span>
@@ -201,7 +197,7 @@ include('permissoes.php');
                 <a href="material-listar-produtos.php"><i class="bi bi-circle"></i><span>Listar Produtos</span></a>
               </li>
               <li>
-                <a href="material-cadastrar-categoria.php"><i class="bi bi-circle"></i><span>Cadastrar Categoria</span></a>
+                <a href="material-cadastrar-categoria.php" class="active" ><i class="bi bi-circle"></i><span>Cadastrar Categoria</span></a>
               </li>
             </ul>
           </li>
@@ -225,10 +221,18 @@ include('permissoes.php');
       </li><!-- End Tables Nav -->
       <?php } ?>
 
+
       <br/>
       <hr>
       <br/>
       <li class="nav-heading">Relatórios</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-person"></i>
+          <span>Profile</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-faq.html">
@@ -256,201 +260,116 @@ include('permissoes.php');
   </aside><!-- End Sidebar-->
 
   <main id="main" class="main">
-
+    
     <div class="pagetitle">
-      <h1><?php $hora = date('H');
-          if($hora < 12 && $hora >= 6) $saudacao = "Bom dia!";
-          if($hora >= 12 && $hora <18) $saudacao = "Boa Tarde!";
-          if($hora >= 18 && $hora < 23) $saudacao = "Boa Noite!";
-          echo 'Olá! '. $_SESSION['login'] .', '.$saudacao; ?></h1>
+      <h1>Cadastro de Categorias</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-          <li class="breadcrumb-item active">Principal
-          </li>
+          <li class="breadcrumb-item"><a href="index.php">Principal</a></li>
+          <li class="breadcrumb-item active">Cadastro de Categorias</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
 
-    <section class="section dashboard">
+  <section class="section">
       <div class="row">
 
-        <!-- Left side columns -->
-        <div class="col-lg-12">
+          <!-- Left side columns -->
+          <div class="col-lg-7">
           <div class="row">
-
-          <!-- Customers Card -->
-          <div class="col-xxl-3 col-xl-12">
-
-            <div class="card info-card customers-card">
-
-              <div class="card-body">
-                <h5 class="card-title">Barragens <span>| Cadastradas</span></h5>
-
-                <div class="d-flex align-items-center">
-                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-water"></i>
-                  </div>
-                  <div class="ps-3">
-                    <h6>
-                    <?php
-                      $sql = PgSql::conectar()->prepare("SELECT COUNT(cod_barragem) as qtd FROM sissrh.tbbarragem_cadastro");
-                      $sql->execute();
-                      $qtdbar = $sql->fetch()['qtd'];
-                      echo $qtdbar;
-                    ?>
-                    </h6>
-                    <span class="text-danger small pt-1 fw-bold">62%</span> <span class="text-muted small pt-2 ps-1"></span>
-
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            </div><!-- End Customers Card -->
-
-            <!-- Revenue Card -->
-            <div class="col-xxl-3 col-md-6">
-              <div class="card info-card revenue-card">
+            
+            <!-- Reports -->
+            <div class="col-12">
+              <div class="card">
 
                 <div class="card-body">
-                  <h5 class="card-title">Registros <span>| Emitidos</span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-clipboard-check"></i>
+                  <h5 class="card-title">Formulário para Cadastro de Categoria</h5>
+                  <?php
+                    if(isset($_POST["acao"]) && $_POST["acao"] == "cadastrar"){
+                      $nomeCategoria = $_POST['nome_categoria'];
+                      $sql = PgSql::conectar()->prepare("INSERT INTO sissrh.tbmaterial_categorias(nome_categoria) VALUES (?);");
+                      $sql->execute(array($nomeCategoria));
+                      Painel::alert("sucesso","Categoria Cadastrada com sucesso!");
+                    }
+                  ?>
+                
+                  <!-- Floating Labels Form -->
+                  <form class="row g-3" name="cadastrarProduto" method="POST" >
+                    <div class="col-md-12">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="categoria" name="nome_categoria" placeholder="Nome da Categoria" required>
+                        <label for="floatingEmail">Nome da Categoria</label>
+                      </div>
+                    </div>                
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary" name="acao" value="cadastrar" >Cadastrar Categoria</button>
                     </div>
-                    <div class="ps-3">
-                      <h6> 
-                      <?php
-                      $sql = PgSql::conectar()->prepare("SELECT COUNT(cod_barragem) as qtdreg FROM sissrh.tbbarragem_cadastro WHERE cadastro_aprovado = 'true'");
-                      $sql->execute();
-                      $qtdreg = $sql->fetch()['qtdreg'];
-                      echo $qtdreg;
-                      ?>
-                    </h6>
-                      <span class="text-success small pt-1 fw-bold"><?php $percentReg = ($qtdreg/$qtdbar)*100; echo intval($percentReg).'%'; ?></span><span class="text-muted small pt-2 ps-1"></span>
-
-                    </div>
-                  </div>
+                  </form><!-- End floating Labels Form -->
+                
                 </div>
 
               </div>
-            </div><!-- End Revenue Card -->
+            </div><!-- End Reports -->
 
-            <!-- Customers Card -->
-            <div class="col-xxl-3 col-xl-12">
-
-              <div class="card info-card customers-card">
-
-                <div class="card-body">
-                  <h5 class="card-title">Registros <span>| Pendentes</span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-clipboard-x"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6> 
-                      <?php
-                      $regPend = PgSql::conectar()->prepare("SELECT COUNT(cod_barragem) as qtdregp FROM sissrh.tbbarragem_cadastro WHERE cadastro_aprovado = 'false'");
-                      $regPend->execute();
-                      $qtdregp = $regPend->fetch()['qtdregp'];
-                      echo $qtdregp;
-                      ?>
-                      </h6>
-                      <span class="text-danger small pt-1 fw-bold"><?php $percentRegP = ($qtdregp/$qtdbar)*100; echo intval($percentRegP).'%'; ?></span> <span class="text-muted small pt-2 ps-1"></span>
-
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-            </div><!-- End Customers Card -->
-
-            <!-- Revenue Card -->
-            <div class="col-xxl-3 col-md-6">
-              <div class="card info-card revenue-card">
-
-                <div class="card-body">
-                  <h5 class="card-title">Secretário assinante do RIE</h5>
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-clipboard-check"></i>
-                    </div>
-                    <div class="ps-3">
-                    <a href="#" class="btn btn-outline-success">Editar Assinante do RIE</a> 
-                    </div>
-                  </div>
-                </div>
+            <!-- Top Selling -->
+            <div class="col-12">
+              <div class="card top-selling overflow-auto">
 
               </div>
-
-            </div><!-- End Revenue Card -->
+            </div><!-- End Top Selling -->
 
           </div>
         </div><!-- End Left side columns -->
 
         <!-- Right side columns -->
-        <div class="col-lg-4">
+        <div class="col-lg-5">
 
+          <!-- Recent Activity -->
+          <div class="card">
 
-         
+            <div class="card-body">
+              <h5 class="card-title">Categorias <span>| Lista de Categorias</span></h5>
+
+              <div class="activity">
+
+                <!-- Small tables -->
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <th scope="col">Código</th>
+                        <th scope="col">Nome da Categoria</th>
+                        <th scope="col">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <?php                           
+                      /* Instrução de consulta para paginação com PostgreSQL */  
+                      $categorias = PgSql::conectar()->prepare(" SELECT * FROM sissrh.tbmaterial_categorias ORDER BY cod_categoria ASC");
+                      $categorias->execute();
+                      $categorias = $categorias->fetchAll();  
+                      foreach($categorias as $key => $value)  {
+                      ?>      
+                      <tr>
+                        <td><?php echo $value['cod_categoria']; ?></td>
+                        <td><?php echo mb_strtoupper($value['nome_categoria'], 'UTF-8'); ?></td>
+                        <td><button type="button" class="btn btn-warning" onclick="parent.location.href ='#'"><i class="bi bi-pencil-fill"></i></button></td>
+                      </tr>
+                      <?php } ?>  
+                    </tbody>
+                  </table>
+                <!-- End small tables -->
+
+              </div>
+
+            </div>
+          </div><!-- End Recent Activity -->
+
         </div><!-- End Right side columns -->
 
-      <section class="section">
-        <div class="row">
-          <div class="col-lg-12">
-
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Relação de Barragens Cadatradas</h5>
-
-                <!-- Table with stripped rows -->
-                <table class="table datatable">
-                  <thead>
-                    <tr>
-                    <th scope="col">Nome da Barragem</th>
-                    <th scope="col">Nome do Proprietário</th>
-                    <th scope="col">Municipio</th>
-                    <th scope="col">CPF | CNPJ</th>
-                    <th scope="col">Nº Reg.</th>
-                    <th scope="col"><center>Ações</center></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  <?php
-                      $barragens = PgSql::conectar()->prepare(" SELECT * FROM sissrh.tbbarragem_cadastro ORDER BY cod_barragem DESC");
-                      $barragens->execute();
-                      $barragens = $barragens->fetchAll();
-                      foreach($barragens as $key => $value){
-                    ?>
-                    <tr>
-                      <td><?php echo $value['nome_barragem']; ?></td>
-                      <td><?php echo $value['empreendedor']; ?></td>
-                      <td><?php echo $value['municipio']; ?></td>
-                      <td><?php echo $value['cpf_cnpj']; ?></td>
-                      <td><?php echo $value['numero_registro']; ?></td>
-                      <td><center><a href="<?php echo INCLUDE_PATH ?>barragem-editar-validar.php?codBarragem=<?php echo $value['cod_barragem']; ?>"><i class="bi bi-pencil-square"></i></a>&nbsp;<a href="<?php echo INCLUDE_PATH ?>barragem-infor-adicional.php?codBarragem=<?php echo $value['cod_barragem']; ?>"><i class="bi bi-clipboard-plus"></i></a>
-                      <a href="#" onclick="parent.location.href ='<?php echo INCLUDE_PATH; ?>relatorios/registro-identificacao-empreendedor.php?codBarragem=<?php echo $value['cod_barragem']; ?>'" ><i class="bi bi-file-earmark-pdf"></i></a>&nbsp;<i class="bi bi-trash"></i></center></td>
-                    </tr>
-                    <?php
-                      }
-                      ?>
-                  </tbody>
-                </table>
-                <!-- End Table with stripped rows -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
       </div>
     </section>
 
-  </main><!-- End #main -->
+</main><!-- End #main -->
 
    <!-- ======= Footer ======= -->
    <?php include('footer.php'); ?>

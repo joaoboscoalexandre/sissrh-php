@@ -165,7 +165,64 @@
         </ul>
       </li><!-- End Tables Nav -->
       <?php } ?>
-
+      
+      <?php if($sistema06 == true || $superAdmin == true){ ?>
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-SiSMat" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-basket2"></i><span>Solicitação de Material</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-SiSMat" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="rh-cadastrar-funcionario.php">
+              <i class="bi bi-circle"></i><span>Pedidos</span>
+            </a>
+            <ul>
+              <li>
+                <a href="material-administrar-pedidos.php"><i class="bi bi-circle"></i><span>Administrar Pedidos</span></a>
+              </li>
+              <li>
+                <a href="material-pedido-material.php"><i class="bi bi-circle"></i><span>Pedido de Material</span></a>
+              </li>
+              <li>
+                <a href="material-listar-pedidos.php"><i class="bi bi-circle"></i><span>Listar Pedidos</span></a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="rh-cadastrar-funcionario.php">
+              <i class="bi bi-circle"></i><span>Produtos</span>
+            </a>
+            <ul>
+              <li>
+                <a href="material-cadastrar-produto.php"><i class="bi bi-circle"></i><span>Cadastrar Produto</span></a>
+              </li>
+              <li>
+                <a href="material-listar-produtos.php"><i class="bi bi-circle"></i><span>Listar Produtos</span></a>
+              </li>
+              <li>
+                <a href="material-cadastrar-categoria.php"><i class="bi bi-circle"></i><span>Cadastrar Categoria</span></a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="rh-cadastrar-funcionario.php">
+              <i class="bi bi-circle"></i><span>Estoque</span>
+            </a>
+            <ul>
+              <li>
+                <a href="material-entrada-material.php"><i class="bi bi-circle"></i><span>Entrada de Material</span></a>
+              </li>
+              <li>
+                <a href="material-listar-estoque.php"><i class="bi bi-circle"></i><span>Listar Estoque</span></a>
+              </li>
+              <li>
+                <a href="material-listar-entrada-material.php"><i class="bi bi-circle"></i><span>Listar Entradas</span></a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+      <?php } ?>
 
       <br/>
       <hr>
@@ -211,7 +268,80 @@
 
         <div class="col-lg-12">
 
-        <?php if($_GET['codAgrovila'] == ""){ ?>
+        <?php if(isset($_GET['codAgrovila']) && $_GET['codAgrovila'] != ""){ 
+          
+          $agrovila = PgSql::conectar()->prepare("SELECT * FROM sissrh.tbdesapropriacao_agrovila WHERE cod_agrovila = ?");
+          $agrovila->execute(array($_GET['codAgrovila']));
+          $agrovila = $agrovila->fetch();
+          ?>
+
+          <div class="card">
+            <div class="card-body"><br/>
+              <center><img src="assets/img/Logotipo_SRH.png" alt=""></center><br/>
+              <center><h5 class="card-title">Formulário para Editar Informações da Obra e da Agrovila</h5><hr width="10%"><br/></center>
+              
+              <?php 
+              if(isset($_POST['acao']) && $_POST['acao'] == "atualizar"){
+
+                $nomeObra = $_POST['nome_obra'];
+                $codMunicipio = $_POST['municipio'];
+                $nomeAgrovila = $_POST['nome_agrovila'];
+                $codAgrovila = $_POST['cod_agrovila'];
+
+                $obra = PgSql::conectar()->prepare("UPDATE sissrh.tbdesapropriacao_agrovila SET nome_obra=?, nome_agrovila=?, cod_municipio=? WHERE cod_agrovila=?");
+                $obra->execute(array($nomeObra,$nomeAgrovila,$codMunicipio,$codAgrovila));
+                Painel::alert('sucesso', 'Dados da Obra Atualizados com sucesso!');
+              } 
+              ?>
+              <div class="alert alert-primary alert-dismissible fade show" ><strong>1. Editar Informações da Obra e Agrovila</strong></div>
+              <!-- Floating Labels Form -->
+              <form method="post" class="row g-3">
+              <input type="hidden" name="cod_agrovila" value="<?php echo $agrovila['cod_agrovila']; ?>">
+                <div class="col-md-5">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="nome_obra" placeholder="Nome da Obra" value="<?php echo mb_strtoupper($agrovila['nome_obra'], 'UTF-8'); ?>" required>
+                    <label for="floatingName">Nome da Obra</label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="Municipio" name="municipio" required>
+
+                    <?php
+                      $municipio = PgSql::conectar()->prepare("SELECT * FROM sissrh.tbadmin_municipio WHERE cod_municipio = ?");
+                      $municipio->execute(array($agrovila['cod_municipio']));
+                      $municipio = $municipio->fetch();
+                      ?>
+                      <option value ="<?php echo $municipio['cod_municipio']; ?>"><?php echo $municipio['nome_municipio']; ?></option>;
+                      <?php
+                        $municipios = PgSql::conectar()->prepare("SELECT * FROM sissrh.tbadmin_municipio ORDER BY nome_municipio");
+                        $municipios->execute();
+                        $municipios = $municipios->fetchAll();
+                        foreach($municipios as $key => $value){
+                        ?>
+                        <option value ="<?php echo $value['cod_municipio']; ?>"><?php echo $value['nome_municipio']; ?></option>;
+                      <?php } ?>
+                    </select>
+                    <label for="floatingSelect">Município</label>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="nome_agrovila" value="<?php echo mb_strtoupper($agrovila['nome_agrovila'], 'UTF-8'); ?>" placeholder="Nome da Agrovila" required>
+                    <label for="floatingName">Nome da Agrovila</label>
+                  </div>
+                </div>
+               
+                <div class="text-center"><br/><button type="submit" name="acao" value="atualizar" class="btn btn-secondary">Atualizar Informações da Obra e Agrovila</button>
+                </div>
+
+              </form><!-- End floating Labels Form -->
+            </div>
+          </div>
+
+          <?php } else { ?>
 
           <div class="card">
             <div class="card-body"><br/>
@@ -225,9 +355,9 @@
                 $codMunicipio = $_POST['municipio'];
                 $nomeAgrovila = $_POST['nome_agrovila'];
 
-                $obra = PgSql::conectar()->prepare("INSERT INTO sissrh.tbdesapropriacao_obra (nome_obra, nome_agrovila, cod_municipio) VALUES (?,?,?)");
+                $obra = PgSql::conectar()->prepare("INSERT INTO sissrh.tbdesapropriacao_agrovila (nome_obra, nome_agrovila, cod_municipio) VALUES (?,?,?)");
                 $obra->execute(array($nomeObra,$nomeAgrovila,$codMunicipio));
-                Painel::alert('sucesso', 'Obra Cadastrada com sucesso!');
+                Painel::alert('sucesso', 'Obra e Agrovila Cadastradas com sucesso!');
 
               } 
 
@@ -273,66 +403,6 @@
             </div>
           </div>
 
-          <?php } else { ?>
-
-          <div class="card">
-            <div class="card-body"><br/>
-              <center><img src="assets/img/Logotipo_SRH.png" alt=""></center><br/>
-              <center><h5 class="card-title">Formulário para Editar Informações da Obra e da Agrovila</h5><hr width="10%"><br/></center>
-              
-              <?php 
-              if(isset($_POST['acao']) && $_POST['acao'] == "atualizar"){
-
-                $nomeObra = $_POST['nome_obra'];
-                $codMunicipio = $_POST['municipio'];
-                $nomeAgrovila = $_POST['nome_agrovila'];
-                $codAgrovila = $_GET['codAgrovila'];
-
-                $obra = PgSql::conectar()->prepare("UPDATE sissrh.tbdesapropriacao_agrovila SET nome_obra=?, nome_agrovila=?, cod_municipio=? WHERE cod_agrovila = ? ) VALUES (?,?,?)");
-                $obra->execute(array($nomeObra,$nomeAgrovila,$codMunicipio,$codAgrovila));
-                Painel::alert('sucesso', 'Dados da Obra Atualizados com sucesso!');
-              } 
-              ?>
-              <div class="alert alert-primary alert-dismissible fade show" ><strong>1. Editar Informações da Obra e Agrovila</strong></div>
-              <!-- Floating Labels Form -->
-              <form method="post" class="row g-3">
-                <div class="col-md-5">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" name="nome_obra" placeholder="Nome da Obra" required>
-                    <label for="floatingName">Nome da Obra</label>
-                  </div>
-                </div>
-
-                <div class="col-md-3">
-                  <div class="form-floating">
-                  <select class="form-select" id="floatingSelect" aria-label="Municipio" name="municipio" required>
-                      <option value="" selected disabled>Selecione o Município</option>
-                      <?php
-                        $municipios = PgSql::conectar()->prepare("SELECT * FROM sissrh.tbadmin_municipio ORDER BY nome_municipio");
-                        $municipios->execute();
-                        $municipios = $municipios->fetchAll();
-                        foreach($municipios as $key => $value){
-                        ?>
-                        <option value ="<?php echo $value['cod_municipio']; ?>"><?php echo $value['nome_municipio']; ?></option>;
-                      <?php } ?>
-                    </select>
-                    <label for="floatingSelect">Município</label>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" name="nome_agrovila" placeholder="Nome da Agrovila" required>
-                    <label for="floatingName">Nome da Agrovila</label>
-                  </div>
-                </div>
-               
-                <div class="text-center"><br/><button type="submit" name="acao" value="atualizar" class="btn btn-primary">Cadastrar Obra e Agrovila</button>
-                </div>
-
-              </form><!-- End floating Labels Form -->
-            </div>
-          </div>
 
           <?php } ?>
 

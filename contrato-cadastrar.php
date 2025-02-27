@@ -164,6 +164,63 @@
       </li><!-- End Tables Nav -->
       <?php } ?>
 
+      <?php if($sistema06 == true || $superAdmin == true){ ?>
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-SiSMat" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-basket2"></i><span>Solicitação de Material</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-SiSMat" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="rh-cadastrar-funcionario.php">
+              <i class="bi bi-circle"></i><span>Pedidos</span>
+            </a>
+            <ul>
+              <li>
+                <a href="material-administrar-pedidos.php"><i class="bi bi-circle"></i><span>Administrar Pedidos</span></a>
+              </li>
+              <li>
+                <a href="material-pedido-material.php"><i class="bi bi-circle"></i><span>Pedido de Material</span></a>
+              </li>
+              <li>
+                <a href="material-listar-pedidos.php"><i class="bi bi-circle"></i><span>Listar Pedidos</span></a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="rh-cadastrar-funcionario.php">
+              <i class="bi bi-circle"></i><span>Produtos</span>
+            </a>
+            <ul>
+              <li>
+                <a href="material-cadastrar-produto.php"><i class="bi bi-circle"></i><span>Cadastrar Produto</span></a>
+              </li>
+              <li>
+                <a href="material-listar-produtos.php"><i class="bi bi-circle"></i><span>Listar Produtos</span></a>
+              </li>
+              <li>
+                <a href="material-cadastrar-categoria.php"><i class="bi bi-circle"></i><span>Cadastrar Categoria</span></a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="rh-cadastrar-funcionario.php">
+              <i class="bi bi-circle"></i><span>Estoque</span>
+            </a>
+            <ul>
+              <li>
+                <a href="material-entrada-material.php"><i class="bi bi-circle"></i><span>Entrada de Material</span></a>
+              </li>
+              <li>
+                <a href="material-listar-estoque.php"><i class="bi bi-circle"></i><span>Listar Estoque</span></a>
+              </li>
+              <li>
+                <a href="material-listar-entrada-material.php"><i class="bi bi-circle"></i><span>Listar Entradas</span></a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+      <?php } ?>
 
       <br/>
       <hr>
@@ -233,7 +290,7 @@
                 $tipoContrato = $_POST['tipo_contrato'];
                 $contratante = $_POST['contratante'];
                 $contratado = $_POST['contratado'];
-                $dataAss = $_POST['data_assinatura'];
+                //$dataAss = $_POST['data_assinatura'];
                 $_POST['data_assinatura'] !== null ? $dataAssinatura = date('Y-m-d', strtotime($_POST['data_assinatura'])) : null ;
                 $_POST['data_inicio'] !== null ? $dataInicio = date('Y-m-d', strtotime($_POST['data_inicio'])) : null;
                 $_POST['data_termino_previsto'] !== null ? $dataTerminoPrevisto = date('Y-m-d', strtotime($_POST['data_termino_previsto'])) : null;
