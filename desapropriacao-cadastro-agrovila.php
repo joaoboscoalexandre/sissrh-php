@@ -111,13 +111,29 @@
         </a>
         <ul id="tables-desapropriacao" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="desapropriacao-cadastro-agrovila.php">
+            <a href="#">
+              <i class="bi bi-circle"></i><span>Cadastro de Famílias</span></a>
+            <ul>
+            <?php
+              $obra = PgSql::conectar()->prepare("SELECT * FROM sissrh.tbdesapropriacao_agrovila ORDER BY cod_agrovila ASC ");
+              $obra->execute();
+              $obra = $obra->fetchAll();
+              foreach($obra as $key => $value){
+              ?>
+              <li>
+                <a href="desapropriacao-cadastro-familia.php?codAgrovila=<?php echo $value['cod_agrovila']; ?>">
+                <i class="bi bi-circle"></i><span><?php echo $value['nome_agrovila']; ?>
+                </a>
+              </li>
+              <?php
+              }
+              ?>
+
+            </ul>
+            </li>
+            <li>
+            <a href="desapropriacao-cadastro-agrovila.php" class="active">
               <i class="bi bi-circle"></i><span>Cadastrar Agrovila</span>
-            </a>
-          </li>
-          <li>
-            <a href="desapropriacao-cadastro-familias.php"  class="active">
-              <i class="bi bi-circle"></i><span>Cadastrar Famílias</span>
             </a>
           </li>
         </ul>
@@ -195,13 +211,15 @@
 
         <div class="col-lg-12">
 
+        <?php if($_GET['codAgrovila'] == ""){ ?>
+
           <div class="card">
             <div class="card-body"><br/>
               <center><img src="assets/img/Logotipo_SRH.png" alt=""></center><br/>
               <center><h5 class="card-title">Formulário de Cadastro da Obra e da Agrovila</h5><hr width="10%"><br/></center>
               
               <?php 
-              if(isset($_POST['acao'])){
+              if(isset($_POST['acao']) && $_POST['acao'] == "cadastrar"){
 
                 $nomeObra = $_POST['nome_obra'];
                 $codMunicipio = $_POST['municipio'];
@@ -255,6 +273,70 @@
             </div>
           </div>
 
+          <?php } else { ?>
+
+          <div class="card">
+            <div class="card-body"><br/>
+              <center><img src="assets/img/Logotipo_SRH.png" alt=""></center><br/>
+              <center><h5 class="card-title">Formulário para Editar Informações da Obra e da Agrovila</h5><hr width="10%"><br/></center>
+              
+              <?php 
+              if(isset($_POST['acao']) && $_POST['acao'] == "atualizar"){
+
+                $nomeObra = $_POST['nome_obra'];
+                $codMunicipio = $_POST['municipio'];
+                $nomeAgrovila = $_POST['nome_agrovila'];
+                $codAgrovila = $_GET['codAgrovila'];
+
+                $obra = PgSql::conectar()->prepare("UPDATE sissrh.tbdesapropriacao_agrovila SET nome_obra=?, nome_agrovila=?, cod_municipio=? WHERE cod_agrovila = ? ) VALUES (?,?,?)");
+                $obra->execute(array($nomeObra,$nomeAgrovila,$codMunicipio,$codAgrovila));
+                Painel::alert('sucesso', 'Dados da Obra Atualizados com sucesso!');
+              } 
+              ?>
+              <div class="alert alert-primary alert-dismissible fade show" ><strong>1. Editar Informações da Obra e Agrovila</strong></div>
+              <!-- Floating Labels Form -->
+              <form method="post" class="row g-3">
+                <div class="col-md-5">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="nome_obra" placeholder="Nome da Obra" required>
+                    <label for="floatingName">Nome da Obra</label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="Municipio" name="municipio" required>
+                      <option value="" selected disabled>Selecione o Município</option>
+                      <?php
+                        $municipios = PgSql::conectar()->prepare("SELECT * FROM sissrh.tbadmin_municipio ORDER BY nome_municipio");
+                        $municipios->execute();
+                        $municipios = $municipios->fetchAll();
+                        foreach($municipios as $key => $value){
+                        ?>
+                        <option value ="<?php echo $value['cod_municipio']; ?>"><?php echo $value['nome_municipio']; ?></option>;
+                      <?php } ?>
+                    </select>
+                    <label for="floatingSelect">Município</label>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" name="nome_agrovila" placeholder="Nome da Agrovila" required>
+                    <label for="floatingName">Nome da Agrovila</label>
+                  </div>
+                </div>
+               
+                <div class="text-center"><br/><button type="submit" name="acao" value="atualizar" class="btn btn-primary">Cadastrar Obra e Agrovila</button>
+                </div>
+
+              </form><!-- End floating Labels Form -->
+            </div>
+          </div>
+
+          <?php } ?>
+
+
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Relação de obras cadastradas</h5>
@@ -267,17 +349,25 @@
                     <th scope="col">Nome da Obra</th>
                     <th scope="col">Nome da Agrovila</th>
                     <th scope="col">Município</th>
-                    <th scope="col">Ações</th>
+                    <th scope="col"><center>Ações</center></th>
                   </tr>
                 </thead>
                 <tbody>
+                  <?php
+                    $agrovila = PgSql::conectar()->prepare("SELECT a.cod_agrovila, a.nome_obra, a.nome_agrovila, m.nome_municipio FROM sissrh.tbdesapropriacao_agrovila a
+                    INNER JOIN sissrh.tbadmin_municipio m ON a.cod_municipio = m.cod_municipio");
+                    $agrovila->execute();
+                    $agrovila = $agrovila->fetchAll();
+                    foreach($agrovila as $key => $value){
+                  ?>
                   <tr>
-                    <th scope="row">1</th>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
+                    <th scope="row"><?php echo $value['cod_agrovila']; ?></th>
+                    <td><?php echo mb_strtoupper($value['nome_obra'], 'UTF-8'); ?></td>
+                    <td><?php echo mb_strtoupper($value['nome_agrovila'], 'UTF-8'); ?></td>
+                    <td><?php echo mb_strtoupper($value['nome_municipio'], 'UTF-8'); ?></td>
+                    <td><center><a href="<?php echo INCLUDE_PATH ?>desapropriacao-cadastro-agrovila.php?codAgrovila=<?php echo $value['cod_agrovila']; ?>"><i class="bi bi-pencil-square"></i></a></center></td>
                   </tr>
+                  <?php } ?>
                 </tbody>
               </table>
               <!-- End Table with stripped rows -->

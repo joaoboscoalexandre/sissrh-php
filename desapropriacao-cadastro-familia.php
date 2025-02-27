@@ -2,12 +2,22 @@
 
 include('config.php');
 
-if (isset($_GET['loggout']) || $_SESSION['cpf'] == '' || $_SESSION['login'] == 1) {
-  Painel::loggout();
-}
+if (isset($_GET['loggout']) || $_SESSION['cpf'] == '' || $_SESSION['login'] == 1) { Painel::loggout(); }
 
 include('permissoes.php');
 
+$codAgrovila = $_GET['codAgrovila'];
+$agrovila = PgSql::conectar()->prepare("SELECT a.nome_obra, a.nome_agrovila, m.nome_municipio
+FROM sissrh.tbdesapropriacao_agrovila a
+INNER JOIN sissrh.tbadmin_municipio m ON a.cod_municipio = m.cod_municipio AND a.cod_agrovila = ?");
+$agrovila->execute(array($codAgrovila));
+$agrovila = $agrovila->fetchAll();
+foreach($agrovila as $key => $value){
+  $nomeAgrovila = $value['nome_agrovila'];
+  $nomeMunicipio = $value['nome_municipio'];
+}
+
+//$nomeAgrovila = $agrovila['nome_agrovila'];
 ?>
 
 <!DOCTYPE html>
@@ -114,13 +124,29 @@ include('permissoes.php');
         </a>
         <ul id="tables-desapropriacao" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="desapropriacao-cadastro-agrovila.php" class="active">
+            <a href="#">
+              <i class="bi bi-circle"></i><span>Cadastro de Famílias</span></a>
+            <ul>
+            <?php
+              $obra = PgSql::conectar()->prepare("SELECT * FROM sissrh.tbdesapropriacao_agrovila ORDER BY cod_agrovila ASC ");
+              $obra->execute();
+              $obra = $obra->fetchAll();
+              foreach($obra as $key => $value){
+              ?>
+              <li>
+                <a href="desapropriacao-cadastro-familia.php?codAgrovila=<?php echo $value['cod_agrovila']; ?>" class="active">
+                <i class="bi bi-circle"></i><span><?php echo $value['nome_agrovila']; ?>
+                </a>
+              </li>
+              <?php
+              }
+              ?>
+
+            </ul>
+            </li>
+            <li>
+            <a href="desapropriacao-cadastro-agrovila.php">
               <i class="bi bi-circle"></i><span>Cadastrar Agrovila</span>
-            </a>
-          </li>
-          <li>
-            <a href="desapropriacao-cadastro-familias.php">
-              <i class="bi bi-circle"></i><span>Cadastrar Famílias</span>
             </a>
           </li>
         </ul>
@@ -191,10 +217,10 @@ include('permissoes.php');
 
           <div class="card">
             <div class="card-body">
-              <br/><br/>
-              <center><img src="assets/img/Logotipo_SRH.png" alt=""></center><br/>
-              <center><h5 class="card-title">CADASTRO DAS FAMÍLIAS A SEREM REASSENTADAS NA AGROVILA VILA GRAÇA (CRATEÚS)</h5></center>
-              <center><hr width="15%"></center>
+            <br/><br/>
+              <center><img src="assets/img/Logotipo_SRH.png" alt=""></center>
+              <center><h5 class="card-title">Formulário para cadastro de Famílias a serem reassentadas na Agrovila</strong><br/>
+              <?php echo '<strong>'. $nomeAgrovila .' no Município de '. $nomeMunicipio .'</strong>'; ?></h5></center>
               <br/>
               <?php 
               if(isset($_POST['acao'])){
